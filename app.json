@@ -8,9 +8,11 @@
     "scheme": "peptify",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.nirvanalabs.peptify"
     },
     "android": {
+      "package": "com.nirvanalabs.peptify",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",

@@ -68,6 +68,7 @@
     "preset": "jest-expo",
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
-    }
+    },
+    "globalSetup": "<rootDir>/jest.global-setup.js"
   }
 }

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peptify — Track smarter. Stay consistent.</title>
+  <meta name="description" content="Peptify is a simple, private way to track peptide protocols. Dose logging, reminders, and vial math—all on your phone.">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-primary: #0B7A6B;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #666;
+      --color-bg: #ffffff;
+      --color-bg-alt: #f5f5f5;
+      --color-border: #e0e0e0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-text: #f5f5f5;
+        --color-text-secondary: #b0b0b0;
+        --color-bg: #1a1a1a;
+        --color-bg-alt: #2a2a2a;
+        --color-border: #404040;
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      padding: 16px;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 0 40px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--color-primary);
+    }
+
+    .tagline {
+      font-size: 18px;
+      color: var(--color-text-secondary);
+      margin-bottom: 40px;
+    }
+
+    .features {
+      background-color: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 32px 24px;
+      margin-bottom: 40px;
+    }
+
+    .feature {
+      margin-bottom: 20px;
+    }
+
+    .feature:last-child {
+      margin-bottom: 0;
+    }
+
+    .feature-title {
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 4px;
+    }
+
+    .feature-desc {
+      color: var(--color-text-secondary);
+      font-size: 14px;
+    }
+
+    .cta {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .cta-text {
+      font-size: 18px;
+      color: var(--color-text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .store-badges {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 12px 20px;
+      background-color: var(--color-primary);
+      color: white;
+      border-radius: 6px;
+      font-weight: 500;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .badge:hover {
+      opacity: 0.9;
+    }
+
+    nav {
+      text-align: center;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      padding: 16px 0;
+      margin-bottom: 40px;
+    }
+
+    nav a {
+      color: var(--color-primary);
+      text-decoration: none;
+      margin: 0 16px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      border-top: 1px solid var(--color-border);
+      padding: 32px 0;
+      color: var(--color-text-secondary);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .disclaimer {
+      background-color: var(--color-bg-alt);
+      padding: 16px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 12px;
+    }
+
+    a {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+
+    a:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Peptify</h1>
+      <p class="tagline">Track smarter. Stay consistent.</p>
+    </header>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-title">Never miss a dose</div>
+        <div class="feature-desc">Build your protocol and get reminders at the right time. One tap marks a dose taken or skipped.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Log every detail</div>
+        <div class="feature-desc">Record injection site, actual dose, and notes. Track rotations and keep complete records of your protocol.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Vial math in seconds</div>
+        <div class="feature-desc">The reconstitution calculator turns vial size, water and target dose into exact syringe units to draw.</div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <div class="cta-text">Coming soon to Google Play and the App Store</div>
+      <div class="store-badges">
+        <div class="badge">App Store</div>
+        <div class="badge">Google Play</div>
+      </div>
+    </div>
+
+    <nav>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/support.html">Support</a>
+    </nav>
+
+    <footer>
+      <div class="disclaimer">
+        <strong>Disclaimer:</strong> Peptify is a personal tracking and education tool. It does not provide medical advice, diagnosis, or treatment, and does not recommend any substance or dose. Always consult a licensed healthcare professional.
+      </div>
+      <div class="footer-bottom">
+        © [DATE] [COMPANY / YOUR NAME] · <a href="mailto:[SUPPORT EMAIL]">[SUPPORT EMAIL]</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

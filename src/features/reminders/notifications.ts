@@ -1,7 +1,7 @@
 import { addDays, parseISO } from 'date-fns';
 import * as Notifications from 'expo-notifications';
 import type { SQLiteDatabase } from 'expo-sqlite';
-import { Platform } from 'react-native';
+import { Linking, Platform } from 'react-native';
 
 import { listDosesBetween } from '@/db/repositories/doses';
 import { listProtocols } from '@/db/repositories/protocols';
@@ -9,6 +9,8 @@ import { displayName } from '@/features/library/peptides';
 import { prefs } from '@/features/settings/prefs';
 import { toISODate } from '@/lib/dates';
 import { diffReminders, HORIZON_DAYS, ID_PREFIX, planReminders } from '@/lib/reminders';
+
+import { useReminderStatus } from './status';
 
 const CHANNEL_ID = 'dose-reminders';
 
@@ -81,9 +83,35 @@ export function syncReminders(db: SQLiteDatabase, opts: { maxProtocols?: number 
       } while (again);
     } finally {
       running = null;
+      // Whatever happened, let the UI show the real state.
+      await useReminderStatus.getState().refresh();
     }
   })();
   return running;
+}
+
+export type TurnOnResult = 'on' | 'blocked';
+
+/**
+ * The one action behind every "turn reminders on" button: enable Peptify's switch,
+ * ask the OS if it still can, otherwise send the user to system settings.
+ */
+export async function turnOnReminders(db: SQLiteDatabase): Promise<TurnOnResult> {
+  prefs.setRemindersEnabled(true);
+  // If iOS/Android will no longer show its prompt, the only way is the system Settings page.
+  const before = await Notifications.getPermissionsAsync().catch(() => null);
+  const promptAvailable = !before || before.granted || before.canAskAgain;
+  const granted = await requestReminderPermission().catch(() => false);
+  await syncReminders(db);
+  if (granted) return 'on';
+  // The user just tapped "Don't Allow" on the prompt: respect it, don't bounce them to Settings.
+  if (!promptAvailable) await Linking.openSettings();
+  return 'blocked';
+}
+
+export async function turnOffReminders(db: SQLiteDatabase): Promise<void> {
+  prefs.setRemindersEnabled(false);
+  await syncReminders(db);
 }
 
 async function syncOnce(db: SQLiteDatabase, { maxProtocols }: { maxProtocols?: number }) {

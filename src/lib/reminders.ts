@@ -76,3 +76,14 @@ export function diffReminders(scheduledIds: string[], planned: PlannedReminder[]
     toSchedule: planned.filter((r) => !have.has(r.identifier)),
   };
 }
+
+/** Earliest fire time among our scheduled ids (`dose:<protocol>|<datetime>#<hash>`), or null. */
+export function nextFireAt(scheduledIds: string[]): string | null {
+  let next: string | null = null;
+  for (const id of scheduledIds) {
+    if (!id.startsWith(ID_PREFIX)) continue;
+    const at = id.slice(id.indexOf('|') + 1).split('#')[0];
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(at) && (next === null || at < next)) next = at;
+  }
+  return next;
+}

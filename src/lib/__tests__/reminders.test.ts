@@ -1,6 +1,6 @@
 import type { Protocol } from '@/types/domain';
 
-import { diffReminders, MAX_PENDING, planReminders, reminderId } from '../reminders';
+import { diffReminders, MAX_PENDING, nextFireAt, planReminders, reminderId } from '../reminders';
 
 const protocol = (id: string, o: Partial<Protocol> = {}): Protocol => ({
   id,
@@ -70,5 +70,23 @@ describe('diffReminders', () => {
     const { toCancel, toSchedule } = diffReminders([stale, plan[0].identifier, 'other-lib-id'], plan);
     expect(toCancel).toEqual([stale]);
     expect(toSchedule.map((r) => r.identifier)).toEqual([plan[1].identifier]);
+  });
+});
+
+describe('nextFireAt', () => {
+  it('finds the earliest of our ids and ignores others', () => {
+    expect(
+      nextFireAt([
+        'dose:a|2026-10-07T08:00:00#abc',
+        'other-lib',
+        'dose:b|2026-10-06T20:30:00#x1',
+        'dose:broken',
+      ]),
+    ).toBe('2026-10-06T20:30:00');
+  });
+
+  it('is null when nothing is scheduled', () => {
+    expect(nextFireAt([])).toBeNull();
+    expect(nextFireAt(['someone-else'])).toBeNull();
   });
 });

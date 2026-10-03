@@ -5,6 +5,7 @@ import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native';
 import { Button, EmptyState, Screen, Text } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useStreak } from '@/features/history/hooks';
+import { RemindersBanner } from '@/features/reminders/reminders-banner';
 import { quickLogInput, useLogDose, useToday, useUndoDose } from '@/features/today/hooks';
 import { SlotCard } from '@/features/today/slot-card';
 import { formatTime } from '@/lib/format';
@@ -41,6 +42,7 @@ export default function TodayScreen() {
           </View>
         ) : null
       }>
+      <RemindersBanner />
       {isLoading ? (
         <ActivityIndicator />
       ) : isError ? (

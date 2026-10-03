@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { AppState } from 'react-native';
 
 import { syncReminders } from './notifications';
+import { useReminderStatus } from './status';
 
 const DEBOUNCE_MS = 600;
 
@@ -22,7 +23,13 @@ export function ReminderSync() {
       timer = setTimeout(() => syncReminders(db), DEBOUNCE_MS);
     };
     schedule();
-    const app = AppState.addEventListener('change', (s) => s === 'active' && schedule());
+    // Coming back from system Settings may have changed the permission: re-sync (which refreshes status).
+    const app = AppState.addEventListener('change', (s) => {
+      if (s === 'active') {
+        useReminderStatus.getState().refresh();
+        schedule();
+      }
+    });
     const unsub = qc.getMutationCache().subscribe((e) => {
       if (e.type === 'updated' && e.mutation.state.status === 'success') schedule();
     });

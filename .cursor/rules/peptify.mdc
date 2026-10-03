@@ -1,0 +1,10 @@
+---
+description: Peptify project rules - always apply
+globs:
+alwaysApply: true
+---
+
+Before any change, follow @AGENTS.md (project rules, Expo SDK 54, definition of done).
+For UI work, follow @docs/DESIGN.md. For where code goes, follow @docs/ARCHITECTURE.md.
+Only do the one task from @docs/TASKS.md you were asked to do. Do not edit src/lib or src/db unless that task says so.
+Use `npx expo install` for Expo packages. Never use Expo Go-only or SDK 55+ APIs.

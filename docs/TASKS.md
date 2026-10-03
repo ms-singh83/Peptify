@@ -29,12 +29,12 @@ A task's "Needs" must be done first. Tasks without a shared "Needs" can run in p
 
 ## Day 3 — Logging & inventory
 
-- [~] **T-301** (A) `dosesRepo` + `vialsRepo`; log dose transaction decrements vial. Tests for vial math. *Needs:* T-103 _Note: logDose/deleteDose with atomic vial decrement/restore done early (Day 2) for Today; remaining: vial CRUD hooks + streak/history queries._
-- [ ] **T-302** (B) Dose sheet (time, amount, site grid, note) + wire Today buttons. _Today buttons already quick-log (Day 2); sheet adds site/time/amount edits._ *Needs:* T-301
-- [ ] **T-303** (A) `lib/sites.ts`: suggest least-recently-used site + tests. *Needs:* T-102
-- [ ] **T-304** (B) History screen: month calendar dots + day list. *Needs:* T-301
-- [ ] **T-305** (B) Vials list + form + detail (remaining bar, expiry warnings). *Needs:* T-301
-- [ ] **T-306** (C) Onboarding copy + paywall copy.
+- [x] **T-301** (A) `dosesRepo` + `vialsRepo`; log dose transaction decrements vial. Tests for vial math. *Needs:* T-103 _Note: logDose/deleteDose with atomic vial decrement/restore done early (Day 2) for Today; remaining: vial CRUD hooks + streak/history queries._
+- [x] **T-302** (B) Dose sheet (time, amount, site grid, note) + wire Today buttons. _Today buttons already quick-log (Day 2); sheet adds site/time/amount edits._ *Needs:* T-301
+- [x] **T-303** (A) `lib/sites.ts`: suggest least-recently-used site + tests. *Needs:* T-102
+- [x] **T-304** (B) History screen: month calendar dots + day list. *Needs:* T-301
+- [x] **T-305** (B) Vials list + form + detail (remaining bar, expiry warnings). *Needs:* T-301
+- [x] **T-306** (C) Onboarding copy + paywall copy.
 
 ## Day 4 — Reminders, library, onboarding
 

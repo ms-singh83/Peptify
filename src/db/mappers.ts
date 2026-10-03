@@ -60,10 +60,20 @@ export type VialRow = {
   created_at: string;
 };
 
+/** Corrupt JSON must not crash list screens; fall back and keep going. */
+function parseJson<T>(raw: string | null, fallback: T): T {
+  if (!raw) return fallback;
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    return fallback;
+  }
+}
+
 function scheduleFromRow(r: ProtocolRow): Schedule {
   switch (r.schedule_type as ScheduleType) {
     case 'weekdays':
-      return { type: 'weekdays', weekdays: JSON.parse(r.weekdays ?? '[]') as Weekday[] };
+      return { type: 'weekdays', weekdays: parseJson<Weekday[]>(r.weekdays, []) };
     case 'interval':
       return { type: 'interval', intervalDays: r.interval_days ?? 2 };
     case 'cycle':
@@ -91,7 +101,7 @@ export function protocolFromRow(r: ProtocolRow): Protocol {
     doseAmount: r.dose_amount,
     doseUnit: r.dose_unit as DoseUnit,
     schedule: scheduleFromRow(r),
-    times: JSON.parse(r.times) as string[],
+    times: parseJson<string[]>(r.times, []),
     startDate: r.start_date,
     endDate: r.end_date,
     status: r.status as ProtocolStatus,

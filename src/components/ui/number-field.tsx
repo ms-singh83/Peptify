@@ -30,6 +30,7 @@ export function NumberField({ label, value, onChangeText, unit, error, hint, sty
         ]}>
         <TextInput
           accessibilityLabel={unit ? `${label} in ${unit}` : label}
+          accessibilityHint={error ?? hint}
           value={value}
           onChangeText={(t) => onChangeText(t.replace(/[^\d.,]/g, ''))}
           keyboardType="decimal-pad"

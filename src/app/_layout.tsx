@@ -14,12 +14,12 @@ import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
 import { queryClient } from '@/lib/query-client';
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 /** Rendered only once the database is open and migrated. */
 function HideSplashWhenReady() {
   useEffect(() => {
-    SplashScreen.hideAsync();
+    SplashScreen.hideAsync().catch(() => {});
   }, []);
   return null;
 }
@@ -27,7 +27,7 @@ function HideSplashWhenReady() {
 function DatabaseError({ error }: { error: Error }) {
   const theme = useTheme();
   useEffect(() => {
-    SplashScreen.hideAsync();
+    SplashScreen.hideAsync().catch(() => {});
   }, []);
   return (
     <View style={[styles.error, { backgroundColor: theme.background }]}>

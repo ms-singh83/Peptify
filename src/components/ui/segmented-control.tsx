@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   track: { flexDirection: 'row', borderRadius: Radius.sm + 2, padding: 2 },
   segment: {
     flex: 1,
-    minHeight: MinTapTarget - 8,
+    minHeight: MinTapTarget,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: Radius.sm,

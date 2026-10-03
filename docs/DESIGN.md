@@ -11,16 +11,16 @@ Goal: clean, clinical-but-friendly, iOS-native feel. Think Apple Health meets a 
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `primary` | `#0F9D8A` | `#2DD4BF` | Buttons, active tab, links |
+| `primary` | `#0B7A6B` | `#2DD4BF` | Buttons, active tab, links |
 | `primaryMuted` | `#E6F6F3` | `#0B2E2A` | Selected chips, highlights |
 | `background` | `#FFFFFF` | `#000000` | Screen |
 | `surface` | `#F4F5F7` | `#16181B` | Cards |
 | `border` | `#E3E5E8` | `#2A2D31` | Dividers |
 | `text` | `#0B0D0E` | `#F5F7F8` | Body |
 | `textSecondary` | `#60646C` | `#A1A6AD` | Captions |
-| `success` | `#16A34A` | `#22C55E` | Taken |
-| `warning` | `#D97706` | `#F59E0B` | Low stock, skipped |
-| `danger` | `#DC2626` | `#EF4444` | Missed, delete |
+| `success` | `#15803D` | `#22C55E` | Taken |
+| `warning` | `#B45309` | `#F59E0B` | Low stock, skipped |
+| `danger` | `#B91C1C` | `#EF4444` | Missed, delete |
 | `pro` | `#7C3AED` | `#A78BFA` | Pro badge, paywall accents |
 
 Spacing: 4 · 8 · 12 · 16 · 24 · 32 · 48. Radius: 8 (chips) · 14 (cards) · 999 (pills). Font: system (SF Pro / Roboto), sizes 34/28/22/17/15/13. Numbers in the calculator use tabular figures.

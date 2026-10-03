@@ -7,7 +7,7 @@ export default function TabsLayout() {
   const theme = useTheme();
 
   return (
-    <NativeTabs tintColor={theme.primary} labelStyle={{ color: theme.textSecondary }}>
+    <NativeTabs tintColor={theme.primary} labelStyle={{ default: { color: theme.textSecondary }, selected: { color: theme.primary } }}>
       <NativeTabs.Trigger name="index">
         <Label>Today</Label>
         <Icon

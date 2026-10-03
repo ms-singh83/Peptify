@@ -43,7 +43,7 @@ export const MIGRATIONS: string[] = [
 
   CREATE TABLE doses (
     id TEXT PRIMARY KEY NOT NULL,
-    protocol_id TEXT REFERENCES protocols(id) ON DELETE CASCADE,
+    protocol_id TEXT REFERENCES protocols(id) ON DELETE SET NULL,
     scheduled_for TEXT,
     taken_at TEXT,
     status TEXT NOT NULL,
@@ -69,9 +69,11 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase): Promise<void> {
 
   while (version < MIGRATIONS.length) {
     const sql = MIGRATIONS[version];
-    await db.withExclusiveTransactionAsync(async (txn) => {
-      await txn.execAsync(sql);
-      await txn.execAsync(`PRAGMA user_version = ${version + 1}`);
+    // withTransactionAsync (not the Exclusive variant): the exclusive one opens a separate
+    // connection where the PRAGMAs above are not set. Same rule for logDose in T-301.
+    await db.withTransactionAsync(async () => {
+      await db.execAsync(sql);
+      await db.execAsync(`PRAGMA user_version = ${version + 1}`);
     });
     version += 1;
   }

@@ -8,7 +8,7 @@ import { Text } from './text';
 export function ProBadge() {
   const theme = useTheme();
   return (
-    <View accessibilityLabel="Pro feature" style={[styles.badge, { backgroundColor: theme.pro }]}>
+    <View accessible accessibilityLabel="Pro feature" style={[styles.badge, { backgroundColor: theme.pro }]}>
       <Text variant="caption" color="background" style={styles.label}>
         PRO
       </Text>

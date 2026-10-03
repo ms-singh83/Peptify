@@ -42,7 +42,8 @@ export function reconstitute({
 
   const doseMcg = toMcg(dose, doseUnit);
   const vialMcg = vialMg * 1000;
-  if (doseMcg === null || doseMcg > vialMcg) return null;
+  // epsilon: 1.005 mg * 1000 = 1004.9999999999999 must still allow a 1005 mcg dose
+  if (doseMcg === null || doseMcg > vialMcg + 1e-9) return null;
 
   const concentrationMcgPerMl = vialMcg / waterMl;
   const drawMl = doseMcg / concentrationMcgPerMl;

@@ -19,7 +19,7 @@ export function Chip({ label, selected, onPress }: Props) {
       accessibilityLabel={label}
       accessibilityState={{ selected: !!selected }}
       onPress={onPress}
-      hitSlop={6}
+      hitSlop={4}
       style={[
         styles.chip,
         {

@@ -20,7 +20,7 @@ export default function CalculatorScreen() {
     <Screen
       title="Calculator"
       subtitle="Reconstitution & units to draw"
-      headerRight={hasInput ? <Button title="Clear" variant="ghost" size="sm" onPress={reset} /> : null}>
+      headerRight={hasInput ? <Button title="Clear" accessibilityLabel="Clear calculator" variant="ghost" size="sm" onPress={reset} /> : null}>
       <NumberField label="Peptide in vial" unit="mg" placeholder="5" value={fields.vialMg} onChangeText={set.setVialMg} error={errors.vialMg} />
       <NumberField
         label="Bacteriostatic water added"

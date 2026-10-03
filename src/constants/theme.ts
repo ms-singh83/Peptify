@@ -5,7 +5,7 @@ import { Platform, type TextStyle } from 'react-native';
 
 export const Colors = {
   light: {
-    primary: '#0F9D8A',
+    primary: '#0B7A6B',
     primaryMuted: '#E6F6F3',
     onPrimary: '#FFFFFF',
     background: '#FFFFFF',
@@ -13,9 +13,9 @@ export const Colors = {
     border: '#E3E5E8',
     text: '#0B0D0E',
     textSecondary: '#60646C',
-    success: '#16A34A',
-    warning: '#D97706',
-    danger: '#DC2626',
+    success: '#15803D',
+    warning: '#B45309',
+    danger: '#B91C1C',
     pro: '#7C3AED',
   },
   dark: {

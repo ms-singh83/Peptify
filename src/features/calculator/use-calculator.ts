@@ -56,6 +56,8 @@ export function useCalculator() {
       setVialMg('');
       setWaterMl('');
       setDose('');
+      setDoseUnit('mcg');
+      setSyringe(100);
     },
   };
 }

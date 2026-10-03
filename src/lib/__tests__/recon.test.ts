@@ -43,6 +43,12 @@ describe('reconstitute', () => {
     expect(reconstitute({ ...base, doseUnit: 'iu' })).toBeNull();
   });
 
+  it('allows a dose equal to the whole vial despite float noise', () => {
+    const r = reconstitute({ vialMg: 1.005, waterMl: 1, dose: 1005, doseUnit: 'mcg' });
+    expect(r).not.toBeNull();
+    expect(r!.dosesPerVial).toBe(1);
+  });
+
   it('returns null when the dose is larger than the whole vial', () => {
     expect(reconstitute({ vialMg: 1, waterMl: 1, dose: 2, doseUnit: 'mg' })).toBeNull();
   });

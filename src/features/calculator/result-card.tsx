@@ -1,4 +1,5 @@
-import { StyleSheet, View } from 'react-native';
+import { useEffect } from 'react';
+import { AccessibilityInfo, StyleSheet, View } from 'react-native';
 
 import { Card, Text } from '@/components/ui';
 import { Spacing, TabularNums } from '@/constants/theme';
@@ -10,10 +11,18 @@ import { Syringe } from './syringe';
 type Props = { result: ReconResult; syringe: number };
 
 const fmt = (n: number, d = 2) => round(n, d).toLocaleString();
+/** Show more decimals for tiny values so nothing rounds down to "0". */
+const fmtSmall = (n: number, d: number) => (n > 0 && round(n, d) === 0 ? fmt(n, 3) : fmt(n, d));
 
 export function ResultCard({ result, syringe }: Props) {
   const { drawUnits, drawMl, concentrationMcgPerMl, dosesPerVial, exceedsSyringe } = result;
   const tiny = drawUnits < 2;
+  const unitsLabel = fmtSmall(drawUnits, 1);
+
+  // accessibilityLiveRegion is Android-only; announce for VoiceOver too.
+  useEffect(() => {
+    AccessibilityInfo.announceForAccessibility(`Draw to ${unitsLabel} units`);
+  }, [unitsLabel]);
 
   return (
     <Card accessibilityLiveRegion="polite">
@@ -21,7 +30,7 @@ export function ResultCard({ result, syringe }: Props) {
         Draw to
       </Text>
       <Text variant="largeTitle" color="primary" style={TabularNums}>
-        {fmt(drawUnits, 1)} units
+        {unitsLabel} units
       </Text>
       <Text color="textSecondary" style={TabularNums}>
         {fmt(drawMl, 3)} mL on a U-100 syringe
@@ -41,7 +50,7 @@ export function ResultCard({ result, syringe }: Props) {
       ) : null}
 
       <View style={styles.stats}>
-        <Stat label="Concentration" value={`${fmt(concentrationMcgPerMl, 0)} mcg/mL`} />
+        <Stat label="Concentration" value={`${fmtSmall(concentrationMcgPerMl, 0)} mcg/mL`} />
         <Stat label="Doses per vial" value={String(dosesPerVial)} />
       </View>
     </Card>

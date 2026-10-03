@@ -1,0 +1,50 @@
+diff --git a/node_modules/expo-server/build/cjs/vendor/http.js b/node_modules/expo-server/build/cjs/vendor/http.js
+index 4ffaac4..25948d6 100644
+--- a/node_modules/expo-server/build/cjs/vendor/http.js
++++ b/node_modules/expo-server/build/cjs/vendor/http.js
+@@ -109,7 +109,19 @@ async function respond(res, expoRes) {
+         }
+     }
+     if (expoRes.body) {
+-        await (0, promises_1.pipeline)(node_stream_1.Readable.fromWeb(expoRes.body), res);
++        // The client may disconnect before the body is sent (e.g. a page reload).
++        if (res.destroyed || res.writableEnded) {
++            await expoRes.body.cancel().catch(() => { });
++            return;
++        }
++        try {
++            await (0, promises_1.pipeline)(node_stream_1.Readable.fromWeb(expoRes.body), res);
++        }
++        catch (error) {
++            if (!res.destroyed && error?.code !== 'ERR_STREAM_PREMATURE_CLOSE' && error?.code !== 'ERR_STREAM_UNABLE_TO_PIPE') {
++                throw error;
++            }
++        }
+     }
+     else {
+         res.end();
+diff --git a/node_modules/expo-server/build/mjs/vendor/http.js b/node_modules/expo-server/build/mjs/vendor/http.js
+index be9397c..ed23021 100644
+--- a/node_modules/expo-server/build/mjs/vendor/http.js
++++ b/node_modules/expo-server/build/mjs/vendor/http.js
+@@ -101,7 +101,19 @@ export async function respond(res, expoRes) {
+         }
+     }
+     if (expoRes.body) {
+-        await pipeline(Readable.fromWeb(expoRes.body), res);
++        // The client may disconnect before the body is sent (e.g. a page reload).
++        if (res.destroyed || res.writableEnded) {
++            await expoRes.body.cancel().catch(() => { });
++            return;
++        }
++        try {
++            await pipeline(Readable.fromWeb(expoRes.body), res);
++        }
++        catch (error) {
++            if (!res.destroyed && error?.code !== 'ERR_STREAM_PREMATURE_CLOSE' && error?.code !== 'ERR_STREAM_UNABLE_TO_PIPE') {
++                throw error;
++            }
++        }
+     }
+     else {
+         res.end();

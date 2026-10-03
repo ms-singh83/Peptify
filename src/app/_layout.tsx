@@ -10,6 +10,7 @@ import { StyleSheet, View } from 'react-native';
 import { Text } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { DATABASE_NAME, migrateDbIfNeeded } from '@/db/migrations';
+import { useOnboarding } from '@/features/onboarding/store';
 import { ReminderSync } from '@/features/reminders/reminder-sync';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
@@ -46,6 +47,7 @@ function DatabaseError({ error }: { error: Error }) {
 export default function RootLayout() {
   const scheme = useColorScheme();
   const theme = useTheme();
+  const onboarded = useOnboarding((s) => s.onboarded);
   const [dbError, setDbError] = useState<Error | null>(null);
   // SQLiteProvider calls onError during render; defer the state update.
   const onDbError = useCallback((e: Error) => queueMicrotask(() => setDbError(e)), []);
@@ -61,14 +63,19 @@ export default function RootLayout() {
             <HideSplashWhenReady />
             <ReminderSync />
             <Stack screenOptions={{ headerShown: false, headerTintColor: theme.primary }}>
-              <Stack.Screen name="(tabs)" />
-              <Stack.Screen name="protocol/form" options={{ presentation: 'modal', headerShown: true }} />
-              <Stack.Screen name="protocol/[id]" options={{ headerShown: true, title: '' }} />
-              <Stack.Screen name="dose" options={{ presentation: 'modal', headerShown: true }} />
-              <Stack.Screen name="history" options={{ headerShown: true }} />
-              <Stack.Screen name="vials/index" options={{ headerShown: true }} />
-              <Stack.Screen name="vials/form" options={{ presentation: 'modal', headerShown: true }} />
-              <Stack.Screen name="library/[slug]" options={{ headerShown: true, title: '' }} />
+              <Stack.Protected guard={!onboarded}>
+                <Stack.Screen name="onboarding" options={{ gestureEnabled: false }} />
+              </Stack.Protected>
+              <Stack.Protected guard={onboarded}>
+                <Stack.Screen name="(tabs)" />
+                <Stack.Screen name="protocol/form" options={{ presentation: 'modal', headerShown: true }} />
+                <Stack.Screen name="protocol/[id]" options={{ headerShown: true, title: '' }} />
+                <Stack.Screen name="dose" options={{ presentation: 'modal', headerShown: true }} />
+                <Stack.Screen name="history" options={{ headerShown: true }} />
+                <Stack.Screen name="vials/index" options={{ headerShown: true }} />
+                <Stack.Screen name="vials/form" options={{ presentation: 'modal', headerShown: true }} />
+                <Stack.Screen name="library/[slug]" options={{ headerShown: true, title: '' }} />
+              </Stack.Protected>
             </Stack>
           </QueryClientProvider>
         </SQLiteProvider>

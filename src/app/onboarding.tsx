@@ -1,5 +1,5 @@
-import { useState, type ReactNode } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useEffect, useState, type ReactNode } from 'react';
+import { BackHandler, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button, Card, Text } from '@/components/ui';
@@ -29,10 +29,22 @@ export default function OnboardingScreen() {
   const back = () => setStep((s) => Math.max(s - 1, 0));
   const current = STEPS[step];
 
+  // Android back button steps back instead of leaving the app (except on the first step).
+  useEffect(() => {
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (step === 0) return false;
+      setStep((s) => s - 1);
+      return true;
+    });
+    return () => sub.remove();
+  }, [step]);
+
   const enableReminders = async () => {
     setAsking(true);
     try {
       await requestReminderPermission();
+    } catch {
+      // Permission prompt failed; reminders can be enabled later in Settings.
     } finally {
       setAsking(false);
       next();

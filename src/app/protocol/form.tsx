@@ -20,6 +20,7 @@ import { PeptidePicker } from '@/features/protocols/peptide-picker';
 import { ScheduleSection } from '@/features/protocols/schedule-section';
 import { TimesSection } from '@/features/protocols/times-section';
 import { VialSection } from '@/features/protocols/vial-section';
+import { getPeptide } from '@/features/library/peptides';
 import { toISODate } from '@/lib/dates';
 import { DOSE_UNITS, type DoseUnit } from '@/types/domain';
 
@@ -35,7 +36,7 @@ export default function ProtocolFormScreen() {
 
   const [form, setForm] = useState<ProtocolFormState>(() => ({
     ...emptyForm(toISODate(new Date())),
-    peptideSlug: peptideSlug ?? null,
+    peptideSlug: getPeptide(peptideSlug) ? peptideSlug! : null,
   }));
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);

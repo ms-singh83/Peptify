@@ -12,6 +12,8 @@ import { diffReminders, HORIZON_DAYS, ID_PREFIX, planReminders } from '@/lib/rem
 
 const CHANNEL_ID = 'dose-reminders';
 
+// Free-tier limit (maxProtocols: 1) is passed once purchases exist (T-503).
+
 // Show reminders even while the app is open.
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -41,8 +43,8 @@ export async function requestReminderPermission(): Promise<boolean> {
   const current = await Notifications.getPermissionsAsync();
   if (current.granted) return true;
   if (!current.canAskAgain) return false;
-  const p = await Notifications.requestPermissionsAsync();
-  return p.granted;
+  await Notifications.requestPermissionsAsync();
+  return hasReminderPermission();
 }
 
 async function cancelAllOurs() {
@@ -70,11 +72,13 @@ export function syncReminders(db: SQLiteDatabase, opts: { maxProtocols?: number 
     try {
       do {
         again = false;
-        await syncOnce(db, opts);
+        try {
+          await syncOnce(db, opts);
+        } catch (e) {
+          // Reminders must never take the app down; a queued or later sync retries.
+          console.warn('Reminder sync failed', e);
+        }
       } while (again);
-    } catch (e) {
-      // Reminders must never take the app down; the next sync retries.
-      console.warn('Reminder sync failed', e);
     } finally {
       running = null;
     }
@@ -109,6 +113,7 @@ async function syncOnce(db: SQLiteDatabase, { maxProtocols }: { maxProtocols?: n
 
   await Promise.all(toCancel.map((id) => Notifications.cancelScheduledNotificationAsync(id)));
   for (const r of toSchedule) {
+    // One bad slot must not block the rest.
     await Notifications.scheduleNotificationAsync({
       identifier: r.identifier,
       content: { title: r.title, body: r.body, data: r.data, sound: true },
@@ -117,6 +122,6 @@ async function syncOnce(db: SQLiteDatabase, { maxProtocols }: { maxProtocols?: n
         date: parseISO(r.fireAt), // local time
         channelId: CHANNEL_ID,
       },
-    });
+    }).catch((e) => console.warn('Could not schedule reminder', r.identifier, e));
   }
 }

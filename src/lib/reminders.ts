@@ -11,6 +11,8 @@ import { formatAmount } from './units';
 export const MAX_PENDING = 60;
 export const HORIZON_DAYS = 14;
 export const ID_PREFIX = 'dose:';
+/** Don't schedule slots this close to now — they'd be in the past by the time the OS gets them. */
+export const MIN_LEAD_MS = 15_000;
 
 export type PlannedReminder = {
   identifier: string;
@@ -45,10 +47,10 @@ export function planReminders(protocols: Protocol[], now: Date, { logged, maxPro
     .sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1))
     .slice(0, maxProtocols ?? Infinity);
   const byId = new Map(active.map((p) => [p.id, p]));
-  const nowISO = toISODateTime(now);
+  const cutoff = toISODateTime(new Date(now.getTime() + MIN_LEAD_MS));
 
   return occurrencesForProtocols(active, toISODate(now), toISODate(addDays(now, HORIZON_DAYS)))
-    .filter((o) => o.scheduledFor > nowISO && !logged.has(`${o.protocolId}|${o.scheduledFor}`))
+    .filter((o) => o.scheduledFor > cutoff && !logged.has(`${o.protocolId}|${o.scheduledFor}`))
     .slice(0, MAX_PENDING)
     .map((o) => {
       const p = byId.get(o.protocolId)!;

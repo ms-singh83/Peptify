@@ -1,10 +1,12 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Icon, Label, NativeTabs, VectorIcon } from 'expo-router/unstable-native-tabs';
 
+import { useReminderTapNavigation } from '@/features/reminders/use-reminder-tap';
 import { useTheme } from '@/hooks/use-theme';
 
 export default function TabsLayout() {
   const theme = useTheme();
+  useReminderTapNavigation();
 
   return (
     <NativeTabs tintColor={theme.primary} labelStyle={{ default: { color: theme.textSecondary }, selected: { color: theme.primary } }}>

@@ -6,16 +6,16 @@ A task's "Needs" must be done first. Tasks without a shared "Needs" can run in p
 
 ## Day 1 — Foundation
 
-- [ ] **T-101** (A) Install deps from ARCHITECTURE.md, add jest-expo config + `test`/`typecheck` scripts, `.env.example`. *Done when:* `npm test` runs a sample test.
-- [ ] **T-102** (A) `src/types/domain.ts`: Vial, Protocol, Dose, Schedule, InjectionSite, Peptide types + zod schemas. *Needs:* —
-- [ ] **T-103** (A) `src/db/migrations.ts` (v1 schema from ARCHITECTURE) + `SQLiteProvider` in root layout + repository skeletons. *Needs:* T-101, T-102
-- [ ] **T-104** (A) `src/lib/recon.ts` + `units.ts` with tests (5mg/2mL/250mcg → 10 units; invalid input → null). *Needs:* T-101
-- [ ] **T-105** (B) Remove template screens/components not needed; theme tokens from DESIGN.md into `constants/theme.ts`. *Needs:* —
-- [ ] **T-106** (B) UI kit: Screen, Text, Button, Card, ListRow, Chip, SegmentedControl, NumberField, EmptyState, ProBadge. *Needs:* T-105
-- [ ] **T-107** (B) `(tabs)` layout with 5 NativeTabs + placeholder screens. *Needs:* T-105
-- [ ] **T-108** (B) Calculator screen + SVG syringe using `lib/recon`. *Needs:* T-104, T-106
-- [ ] **T-109** (C) `src/content/peptides.json` — 25 entries (schema in `docs/CONTENT.md`), 5 marked `free: true`.
-- [ ] **T-110** (C) Fill `legal/privacy-policy.md`, `legal/terms.md` placeholders (company name, email, date).
+- [x] **T-101** (A) Install deps from ARCHITECTURE.md, add jest-expo config + `test`/`typecheck` scripts, `.env.example`. *Done when:* `npm test` runs a sample test.
+- [x] **T-102** (A) `src/types/domain.ts`: Vial, Protocol, Dose, Schedule, InjectionSite, Peptide types + zod schemas. *Needs:* —
+- [x] **T-103** (A) `src/db/migrations.ts` (v1 schema from ARCHITECTURE) + `SQLiteProvider` in root layout + repository skeletons. *Needs:* T-101, T-102 _Note: `logDose` + vial decrement transaction left for T-301 as planned._
+- [x] **T-104** (A) `src/lib/recon.ts` + `units.ts` with tests (5mg/2mL/250mcg → 10 units; invalid input → null). *Needs:* T-101
+- [x] **T-105** (B) Remove template screens/components not needed; theme tokens from DESIGN.md into `constants/theme.ts`. *Needs:* —
+- [x] **T-106** (B) UI kit: Screen, Text, Button, Card, ListRow, Chip, SegmentedControl, NumberField, EmptyState, ProBadge. *Needs:* T-105
+- [x] **T-107** (B) `(tabs)` layout with 5 NativeTabs + placeholder screens. *Needs:* T-105
+- [x] **T-108** (B) Calculator screen + SVG syringe using `lib/recon`. *Needs:* T-104, T-106
+- [x] **T-109** (C) `src/content/peptides.json` — 25 entries (schema in `docs/CONTENT.md`), 5 marked `free: true`.
+- [ ] **T-110** (You) Fill `legal/privacy-policy.md`, `legal/terms.md` placeholders (company name, email, date). *Blocked on you:* legal name + support email.
 
 ## Day 2 — Protocols
 

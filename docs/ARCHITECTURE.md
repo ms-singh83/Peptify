@@ -19,15 +19,9 @@
 | Tests | `jest-expo` + `@types/jest` | Pure logic unit tests |
 | Builds | EAS Build + EAS Submit | Store binaries |
 
-Install the new ones on your Mac (versions auto-matched to SDK 54):
+All of these are installed (T-101). To add a new Expo package later, always use `npx expo install <pkg>` so the version matches SDK 54.
 
-```bash
-npx expo install expo-sqlite expo-haptics expo-store-review react-native-svg @shopify/flash-list jest-expo
-npm i date-fns
-npm i -D jest @types/jest
-```
-
-Then add to `package.json`: `"test": "jest"`, `"typecheck": "tsc --noEmit"`, and `"jest": { "preset": "jest-expo" }`.
+Scripts: `npm test` (jest-expo), `npm run typecheck`, `npm run lint` (eslint-config-expo), `npm run check` (all three).
 
 ## Folder structure (target)
 

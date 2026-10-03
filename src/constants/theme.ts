@@ -1,65 +1,74 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * Design tokens — see docs/DESIGN.md. Screens must use these, never raw hex values.
  */
-
-import '@/global.css';
-
-import { Platform } from 'react-native';
+import { Platform, type TextStyle } from 'react-native';
 
 export const Colors = {
   light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
+    primary: '#0F9D8A',
+    primaryMuted: '#E6F6F3',
+    onPrimary: '#FFFFFF',
+    background: '#FFFFFF',
+    surface: '#F4F5F7',
+    border: '#E3E5E8',
+    text: '#0B0D0E',
     textSecondary: '#60646C',
+    success: '#16A34A',
+    warning: '#D97706',
+    danger: '#DC2626',
+    pro: '#7C3AED',
   },
   dark: {
-    text: '#ffffff',
+    primary: '#2DD4BF',
+    primaryMuted: '#0B2E2A',
+    onPrimary: '#04201C',
     background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
+    surface: '#16181B',
+    border: '#2A2D31',
+    text: '#F5F7F8',
+    textSecondary: '#A1A6AD',
+    success: '#22C55E',
+    warning: '#F59E0B',
+    danger: '#EF4444',
+    pro: '#A78BFA',
   },
 } as const;
 
-export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
-
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
-  },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
-  },
-});
+export type ThemeColors = { [K in keyof typeof Colors.light]: string };
+export type ThemeColor = keyof ThemeColors;
 
 export const Spacing = {
-  half: 2,
-  one: 4,
-  two: 8,
-  three: 16,
-  four: 24,
-  five: 32,
-  six: 64,
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 24,
+  xxl: 32,
+  xxxl: 48,
 } as const;
 
-export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
-export const MaxContentWidth = 800;
+export const Radius = {
+  sm: 8,
+  md: 14,
+  pill: 999,
+} as const;
+
+export const Type = {
+  largeTitle: { fontSize: 34, lineHeight: 41, fontWeight: '700' },
+  title: { fontSize: 28, lineHeight: 34, fontWeight: '700' },
+  title2: { fontSize: 22, lineHeight: 28, fontWeight: '600' },
+  headline: { fontSize: 17, lineHeight: 22, fontWeight: '600' },
+  body: { fontSize: 17, lineHeight: 22, fontWeight: '400' },
+  callout: { fontSize: 15, lineHeight: 20, fontWeight: '400' },
+  caption: { fontSize: 13, lineHeight: 18, fontWeight: '400' },
+} as const;
+
+export type TypeVariant = keyof typeof Type;
+
+/** Tabular digits so numbers don't jump while typing. */
+export const TabularNums: TextStyle = { fontVariant: ['tabular-nums'] };
+
+export const MinTapTarget = 44;
+export const MaxContentWidth = 640;
+
+export const MonoFont = Platform.select({ ios: 'Menlo', default: 'monospace' });

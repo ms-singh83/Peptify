@@ -68,6 +68,7 @@ export default function RootLayout() {
               <Stack.Screen name="history" options={{ headerShown: true }} />
               <Stack.Screen name="vials/index" options={{ headerShown: true }} />
               <Stack.Screen name="vials/form" options={{ presentation: 'modal', headerShown: true }} />
+              <Stack.Screen name="library/[slug]" options={{ headerShown: true, title: '' }} />
             </Stack>
           </QueryClientProvider>
         </SQLiteProvider>

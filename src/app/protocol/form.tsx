@@ -29,11 +29,14 @@ const UNIT_OPTIONS = DOSE_UNITS.map((u) => ({ value: u, label: u === 'iu' ? 'IU'
 }[];
 
 export default function ProtocolFormScreen() {
-  const { id } = useLocalSearchParams<{ id?: string }>();
+  const { id, peptideSlug } = useLocalSearchParams<{ id?: string; peptideSlug?: string }>();
   const existing = useProtocol(id);
   const save = useSaveProtocol();
 
-  const [form, setForm] = useState<ProtocolFormState>(() => emptyForm(toISODate(new Date())));
+  const [form, setForm] = useState<ProtocolFormState>(() => ({
+    ...emptyForm(toISODate(new Date())),
+    peptideSlug: peptideSlug ?? null,
+  }));
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
   const [loaded, setLoaded] = useState(!id);

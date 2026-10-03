@@ -10,6 +10,7 @@ import { StyleSheet, View } from 'react-native';
 import { Text } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { DATABASE_NAME, migrateDbIfNeeded } from '@/db/migrations';
+import { ReminderSync } from '@/features/reminders/reminder-sync';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
 import { queryClient } from '@/lib/query-client';
@@ -58,6 +59,7 @@ export default function RootLayout() {
         <SQLiteProvider databaseName={DATABASE_NAME} onInit={migrateDbIfNeeded} onError={onDbError}>
           <QueryClientProvider client={queryClient}>
             <HideSplashWhenReady />
+            <ReminderSync />
             <Stack screenOptions={{ headerShown: false, headerTintColor: theme.primary }}>
               <Stack.Screen name="(tabs)" />
               <Stack.Screen name="protocol/form" options={{ presentation: 'modal', headerShown: true }} />

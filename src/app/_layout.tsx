@@ -44,6 +44,7 @@ function DatabaseError({ error }: { error: Error }) {
 
 export default function RootLayout() {
   const scheme = useColorScheme();
+  const theme = useTheme();
   const [dbError, setDbError] = useState<Error | null>(null);
   // SQLiteProvider calls onError during render; defer the state update.
   const onDbError = useCallback((e: Error) => queueMicrotask(() => setDbError(e)), []);
@@ -57,8 +58,10 @@ export default function RootLayout() {
         <SQLiteProvider databaseName={DATABASE_NAME} onInit={migrateDbIfNeeded} onError={onDbError}>
           <QueryClientProvider client={queryClient}>
             <HideSplashWhenReady />
-            <Stack screenOptions={{ headerShown: false }}>
+            <Stack screenOptions={{ headerShown: false, headerTintColor: theme.primary }}>
               <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="protocol/form" options={{ presentation: 'modal', headerShown: true }} />
+              <Stack.Screen name="protocol/[id]" options={{ headerShown: true, title: '' }} />
             </Stack>
           </QueryClientProvider>
         </SQLiteProvider>

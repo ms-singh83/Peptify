@@ -17,9 +17,11 @@ type Props = {
   scroll?: boolean;
   /** Content pinned under the scroll area, e.g. a Save button. */
   footer?: ReactNode;
+  /** Tab screens: true (tab bar owns the bottom). Stack/modal screens with a native header: false (header owns the top, we own the home-indicator area). */
+  safeTop?: boolean;
 } & Pick<ScrollViewProps, 'keyboardShouldPersistTaps'>;
 
-export function Screen({ title, subtitle, headerRight, children, scroll = true, footer, ...rest }: Props) {
+export function Screen({ title, subtitle, headerRight, children, scroll = true, footer, safeTop = true, ...rest }: Props) {
   const theme = useTheme();
 
   const header = title ? (
@@ -35,7 +37,7 @@ export function Screen({ title, subtitle, headerRight, children, scroll = true, 
   ) : null;
 
   return (
-    <SafeAreaView edges={['top', 'left', 'right']} style={[styles.flex, { backgroundColor: theme.background }]}>
+    <SafeAreaView edges={safeTop ? ['top', 'left', 'right'] : ['left', 'right', 'bottom']} style={[styles.flex, { backgroundColor: theme.background }]}>
       {scroll ? (
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"

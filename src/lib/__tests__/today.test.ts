@@ -30,6 +30,7 @@ const dose = (protocolId: string | null, scheduledFor: string | null, status: Do
   site: null,
   notes: null,
   vialId: null,
+  vialDrawMcg: null,
   createdAt: '2026-10-05T10:00:00',
 });
 

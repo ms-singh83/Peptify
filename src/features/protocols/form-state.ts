@@ -27,9 +27,11 @@ export type ProtocolFormState = {
   hasEndDate: boolean;
   endDate: ISODate;
   notes: string;
+  /** Not edited in this form yet (vials link in T-305); carried so edits don't unlink it. */
+  vialId: string | null;
 };
 
-export type FormField = 'name' | 'dose' | 'schedule' | 'times' | 'startDate' | 'endDate' | 'notes';
+export type FormField = 'name' | 'dose' | 'schedule' | 'times' | 'startDate' | 'endDate' | 'notes' | 'general';
 export type FormErrors = Partial<Record<FormField, string>>;
 
 export function emptyForm(today: ISODate): ProtocolFormState {
@@ -48,6 +50,7 @@ export function emptyForm(today: ISODate): ProtocolFormState {
     hasEndDate: false,
     endDate: today,
     notes: '',
+    vialId: null,
   };
 }
 
@@ -68,6 +71,7 @@ export function fromProtocol(p: Protocol): ProtocolFormState {
     hasEndDate: !!p.endDate,
     endDate: p.endDate ?? p.startDate,
     notes: p.notes ?? '',
+    vialId: p.vialId,
   };
 }
 
@@ -119,7 +123,7 @@ export function toProtocolInput(
     times: [...new Set(f.times)].sort(),
     startDate: f.startDate,
     endDate: f.hasEndDate ? f.endDate : null,
-    vialId: null,
+    vialId: f.vialId,
     notes: f.notes.trim() || null,
   };
 
@@ -136,5 +140,7 @@ export function toProtocolInput(
     const custom = issue.code === 'custom' || issue.message.startsWith('Pick') || issue.message.startsWith('Add');
     errors[field] = custom ? issue.message : (FRIENDLY[field] ?? issue.message);
   }
+  // Never fail silently: if no field claimed the error, show a general one.
+  if (!Object.keys(errors).length) errors.general = parsed.error.issues[0]?.message ?? 'Please check the form';
   return { ok: false, errors };
 }

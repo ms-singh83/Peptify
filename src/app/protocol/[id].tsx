@@ -48,7 +48,11 @@ export default function ProtocolDetailScreen() {
       {
         text: 'Delete',
         style: 'destructive',
-        onPress: () => remove.mutate(p.id, { onSuccess: () => router.back() }),
+        onPress: () => {
+          // Leave first so the screen doesn't flash "not found" while queries refresh.
+          router.back();
+          remove.mutate(p.id);
+        },
       },
     ]);
 

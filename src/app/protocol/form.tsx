@@ -45,14 +45,14 @@ export default function ProtocolFormScreen() {
     }
   }, [id, existing.data, loaded]);
 
-  const update = (patch: Partial<ProtocolFormState>) => {
-    const next = { ...form, ...patch };
-    setForm(next);
-    if (submitted) {
-      const r = toProtocolInput(next);
-      setErrors(r.ok ? {} : r.errors);
-    }
-  };
+  const update = (patch: Partial<ProtocolFormState>) => setForm((prev) => ({ ...prev, ...patch }));
+
+  // After the first Save attempt, keep errors in sync with what's on screen.
+  useEffect(() => {
+    if (!submitted) return;
+    const r = toProtocolInput(form);
+    setErrors(r.ok ? {} : r.errors);
+  }, [form, submitted]);
 
   const onSave = () => {
     setSubmitted(true);
@@ -139,6 +139,12 @@ export default function ProtocolFormScreen() {
             </Text>
           ) : null}
         </View>
+
+        {errors.general ? (
+          <Text variant="callout" color="danger">
+            {errors.general}
+          </Text>
+        ) : null}
 
         <TextField
           label="Notes (optional)"

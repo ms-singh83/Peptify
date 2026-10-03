@@ -85,7 +85,7 @@ describe('fromProtocol', () => {
       startDate: '2026-10-05',
       endDate: '2026-12-31',
       status: 'active',
-      vialId: null,
+      vialId: 'vial-1',
       notes: 'note',
       createdAt: '2026-10-05T00:00:00',
     };
@@ -101,7 +101,7 @@ describe('fromProtocol', () => {
         times: ['07:30', '19:30'],
         startDate: '2026-10-05',
         endDate: '2026-12-31',
-        vialId: null,
+        vialId: 'vial-1',
         notes: 'note',
       });
     }

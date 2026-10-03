@@ -18,8 +18,8 @@ export async function listDosesBetween(db: SQLiteDatabase, from: ISODateTime, to
   return rows.map(doseFromRow);
 }
 
-/** Amount drawn from a vial in mcg; null when it can't be converted (IU) or wasn't taken. */
-function vialDrawMcg(d: Pick<Dose, 'status' | 'amount' | 'unit'>): number | null {
+/** Amount a dose wants from a vial in mcg; null when it can't be converted (IU) or wasn't taken. */
+function requestedMcg(d: Pick<DoseInput, 'status' | 'amount' | 'unit'>): number | null {
   if (d.status !== 'taken' || d.amount === null || d.unit === null) return null;
   return toMcg(d.amount, d.unit);
 }
@@ -42,14 +42,21 @@ export async function logDose(db: SQLiteDatabase, input: DoseInput): Promise<str
       if (existing) await removeDoseRow(db, doseFromRow(existing));
     }
 
-    const vial = input.protocolId
-      ? await db.getFirstAsync<{ vial_id: string | null }>('SELECT vial_id FROM protocols WHERE id = ?', input.protocolId)
+    const link = input.protocolId
+      ? await db.getFirstAsync<{ vial_id: string | null; remaining_mcg: number | null }>(
+          `SELECT p.vial_id, v.remaining_mcg FROM protocols p LEFT JOIN vials v ON v.id = p.vial_id WHERE p.id = ?`,
+          input.protocolId,
+        )
       : null;
-    const vialId = vial?.vial_id ?? null;
+    const vialId = link?.vial_id ?? null;
+    const requested = requestedMcg(input);
+    // Never draw more than is left; remember what was really drawn for undo.
+    const drawn = vialId && requested !== null ? Math.min(requested, Math.max(link?.remaining_mcg ?? 0, 0)) : null;
 
     await db.runAsync(
-      `INSERT INTO doses (id, protocol_id, scheduled_for, taken_at, status, amount, unit, site, notes, vial_id, created_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO doses (id, protocol_id, scheduled_for, taken_at, status, amount, unit, site, notes,
+         vial_id, vial_draw_mcg, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       id,
       input.protocolId,
       input.scheduledFor,
@@ -60,17 +67,17 @@ export async function logDose(db: SQLiteDatabase, input: DoseInput): Promise<str
       input.site,
       input.notes,
       vialId,
+      drawn,
       nowISO(),
     );
 
-    const draw = vialDrawMcg(input);
-    if (vialId && draw !== null) {
+    if (vialId && drawn !== null && drawn > 0) {
       await db.runAsync(
-        `UPDATE vials SET remaining_mcg = MAX(remaining_mcg - ?, 0),
-           status = CASE WHEN remaining_mcg - ? <= 0 THEN 'empty' ELSE status END
+        `UPDATE vials SET remaining_mcg = remaining_mcg - ?,
+           status = CASE WHEN status = 'active' AND remaining_mcg - ? <= 0 THEN 'empty' ELSE status END
          WHERE id = ?`,
-        draw,
-        draw,
+        drawn,
+        drawn,
         vialId,
       );
     }
@@ -79,20 +86,20 @@ export async function logDose(db: SQLiteDatabase, input: DoseInput): Promise<str
 }
 
 async function removeDoseRow(db: SQLiteDatabase, d: Dose): Promise<void> {
-  const draw = vialDrawMcg(d);
-  if (d.vialId && draw !== null) {
+  if (d.vialId && d.vialDrawMcg) {
+    // Only an auto-emptied vial comes back to life; manually discarded ones stay discarded.
     await db.runAsync(
-      `UPDATE vials SET remaining_mcg = MIN(remaining_mcg + ?, total_mg * 1000),
+      `UPDATE vials SET remaining_mcg = remaining_mcg + ?,
          status = CASE WHEN status = 'empty' THEN 'active' ELSE status END
        WHERE id = ?`,
-      draw,
+      d.vialDrawMcg,
       d.vialId,
     );
   }
   await db.runAsync('DELETE FROM doses WHERE id = ?', d.id);
 }
 
-/** Undo a logged dose, restoring any vial amount it used. */
+/** Undo a logged dose, restoring exactly the vial amount it used. */
 export async function deleteDose(db: SQLiteDatabase, id: string): Promise<void> {
   await db.withTransactionAsync(async () => {
     const row = await db.getFirstAsync<DoseRow>('SELECT * FROM doses WHERE id = ?', id);

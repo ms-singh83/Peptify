@@ -83,6 +83,8 @@ export type Dose = {
   notes: string | null;
   /** Vial the amount was drawn from (set automatically from the protocol). */
   vialId: string | null;
+  /** mcg actually taken from that vial (may be less than the dose if the vial ran out). */
+  vialDrawMcg: number | null;
   createdAt: ISODateTime;
 };
 

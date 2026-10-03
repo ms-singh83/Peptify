@@ -3,6 +3,7 @@ import type { SQLiteDatabase } from 'expo-sqlite';
 import { newId } from '@/db/ids';
 import { doseFromRow, type DoseRow } from '@/db/mappers';
 import { nowISO } from '@/lib/dates';
+import type { SiteUse } from '@/lib/sites';
 import { toMcg } from '@/lib/units';
 import type { Dose, DoseInput, ISODateTime } from '@/types/domain';
 
@@ -16,6 +17,28 @@ export async function listDosesBetween(db: SQLiteDatabase, from: ISODateTime, to
     to,
   );
   return rows.map(doseFromRow);
+}
+
+export async function getDose(db: SQLiteDatabase, id: string): Promise<Dose | null> {
+  const row = await db.getFirstAsync<DoseRow>('SELECT * FROM doses WHERE id = ?', id);
+  return row ? doseFromRow(row) : null;
+}
+
+export async function getDoseForSlot(db: SQLiteDatabase, protocolId: string, scheduledFor: string): Promise<Dose | null> {
+  const row = await db.getFirstAsync<DoseRow>(
+    'SELECT * FROM doses WHERE protocol_id = ? AND scheduled_for = ?',
+    protocolId,
+    scheduledFor,
+  );
+  return row ? doseFromRow(row) : null;
+}
+
+/** Last time each injection site was used (taken doses only). */
+export async function listSiteUses(db: SQLiteDatabase): Promise<SiteUse[]> {
+  return db.getAllAsync<SiteUse>(
+    `SELECT site, MAX(COALESCE(taken_at, created_at)) AS lastUsed
+     FROM doses WHERE site IS NOT NULL AND status = 'taken' GROUP BY site`,
+  );
 }
 
 /** Amount a dose wants from a vial in mcg; null when it can't be converted (IU) or wasn't taken. */

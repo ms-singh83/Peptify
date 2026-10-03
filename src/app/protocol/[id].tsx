@@ -92,6 +92,12 @@ export default function ProtocolDetailScreen() {
         ) : null}
 
         <View style={styles.actions}>
+          {p.status === 'active' ? (
+            <Button
+              title="Log an extra dose"
+              onPress={() => router.push({ pathname: '/dose', params: { protocolId: p.id } })}
+            />
+          ) : null}
           <Button
             title="Edit"
             variant="secondary"

@@ -62,6 +62,7 @@ export default function RootLayout() {
               <Stack.Screen name="(tabs)" />
               <Stack.Screen name="protocol/form" options={{ presentation: 'modal', headerShown: true }} />
               <Stack.Screen name="protocol/[id]" options={{ headerShown: true, title: '' }} />
+              <Stack.Screen name="dose" options={{ presentation: 'modal', headerShown: true }} />
             </Stack>
           </QueryClientProvider>
         </SQLiteProvider>

@@ -4,6 +4,7 @@ import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native';
 
 import { EmptyState, Screen, Text } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
+import { useStreak } from '@/features/history/hooks';
 import { quickLogInput, useLogDose, useToday, useUndoDose } from '@/features/today/hooks';
 import { SlotCard } from '@/features/today/slot-card';
 import { formatTime } from '@/lib/format';
@@ -16,6 +17,7 @@ const partOfDay = (time: string) => {
 
 export default function TodayScreen() {
   const { slots, now, isLoading, isError, refetch } = useToday();
+  const streak = useStreak();
   const log = useLogDose();
   const undo = useUndoDose();
   const busy = log.isPending || undo.isPending;
@@ -26,7 +28,19 @@ export default function TodayScreen() {
   return (
     <Screen
       title="Today"
-      subtitle={`${format(now, 'EEEE, d MMMM')}${slots.length ? ` · ${done} of ${slots.length} logged` : ''}`}>
+      subtitle={`${format(now, 'EEEE, d MMMM')}${slots.length ? ` · ${done} of ${slots.length} logged` : ''}`}
+      headerRight={
+        streak > 0 ? (
+          <View style={styles.streak} accessible accessibilityLabel={`${streak} day streak`}>
+            <Text variant="headline" color="primary">
+              {streak}
+            </Text>
+            <Text variant="caption" color="textSecondary">
+              day streak
+            </Text>
+          </View>
+        ) : null
+      }>
       {isLoading ? (
         <ActivityIndicator />
       ) : isError ? (
@@ -51,6 +65,12 @@ export default function TodayScreen() {
                 busy={busy}
                 onLog={(status) => log.mutate(quickLogInput(slot, status), { onError: fail })}
                 onUndo={() => slot.dose && undo.mutate(slot.dose.id, { onError: fail })}
+                onOpen={() =>
+                  router.push({
+                    pathname: '/dose',
+                    params: { protocolId: slot.protocol.id, scheduledFor: slot.occurrence.scheduledFor },
+                  })
+                }
               />
             ))}
           </View>
@@ -62,4 +82,5 @@ export default function TodayScreen() {
 
 const styles = StyleSheet.create({
   group: { gap: Spacing.sm },
+  streak: { alignItems: 'center' },
 });

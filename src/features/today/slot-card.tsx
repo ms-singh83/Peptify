@@ -1,11 +1,12 @@
 import { format, parseISO } from 'date-fns';
 import * as Haptics from 'expo-haptics';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Button, Card, Text } from '@/components/ui';
 import { Radius, Spacing, type ThemeColor } from '@/constants/theme';
 import { displayName } from '@/features/library/peptides';
 import { useTheme } from '@/hooks/use-theme';
+import { SITE_LABELS } from '@/lib/sites';
 import type { SlotStatus, TodaySlot } from '@/lib/today';
 import { formatAmount } from '@/lib/units';
 
@@ -21,9 +22,11 @@ type Props = {
   busy: boolean;
   onLog: (status: 'taken' | 'skipped') => void;
   onUndo: () => void;
+  /** Opens the dose sheet for site/time/amount details. */
+  onOpen: () => void;
 };
 
-export function SlotCard({ slot, busy, onLog, onUndo }: Props) {
+export function SlotCard({ slot, busy, onLog, onUndo, onOpen }: Props) {
   const theme = useTheme();
   const { protocol, dose, status } = slot;
   const name = displayName(protocol);
@@ -33,7 +36,12 @@ export function SlotCard({ slot, busy, onLog, onUndo }: Props) {
 
   return (
     <Card style={logged && { borderLeftWidth: 4, borderLeftColor: theme[s.color] }}>
-      <View style={styles.header}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={`${name}, ${amount}, ${s.label}`}
+        accessibilityHint="Opens details to set site, time or amount"
+        onPress={onOpen}
+        style={({ pressed }) => [styles.header, pressed && styles.pressed]}>
         <View style={styles.flex}>
           <Text variant="headline">{name}</Text>
           <Text color="textSecondary">{amount}</Text>
@@ -44,12 +52,14 @@ export function SlotCard({ slot, busy, onLog, onUndo }: Props) {
             {s.label}
           </Text>
         </View>
-      </View>
+      </Pressable>
 
       {logged ? (
         <View style={styles.row}>
           <Text variant="callout" color="textSecondary" style={styles.flex}>
-            {status === 'taken' && dose?.takenAt ? `Logged at ${format(parseISO(dose.takenAt), 'h:mm a')}` : 'Marked as skipped'}
+            {status === 'taken' && dose?.takenAt
+              ? `Logged at ${format(parseISO(dose.takenAt), 'h:mm a')}${dose.site ? ` · ${SITE_LABELS[dose.site]}` : ''}`
+              : 'Marked as skipped'}
           </Text>
           <Button
             title="Undo"
@@ -91,4 +101,5 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: Spacing.xs },
   pill: { borderRadius: Radius.pill, paddingHorizontal: Spacing.sm, paddingVertical: 2 },
   pillText: { fontWeight: '600' },
+  pressed: { opacity: 0.6 },
 });

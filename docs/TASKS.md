@@ -38,16 +38,16 @@ A task's "Needs" must be done first. Tasks without a shared "Needs" can run in p
 
 ## Day 4 — Reminders, library, onboarding
 
-- [ ] **T-401** (A) `lib/notifications.ts`: permission, schedule next 14 days per protocol, cancel, reschedule on foreground/edit; notification tap → `dose/[id]`. *Needs:* T-201
-- [ ] **T-402** (B) Library list (search, categories, locks) + detail. *Needs:* T-109, T-106
-- [ ] **T-403** (B) Onboarding flow (goal, experience, notifications, disclaimer) gated by kv-store flag. *Needs:* T-401
-- [ ] **T-404** (You/C) Host privacy policy + terms + support page; put URLs in `src/constants/links.ts`.
+- [x] **T-401** (A) `lib/notifications.ts`: permission, schedule next 14 days per protocol, cancel, reschedule on foreground/edit; notification tap → `dose/[id]`. *Needs:* T-201
+- [x] **T-402** (B) Library list (search, categories, locks) + detail. *Needs:* T-109, T-106
+- [x] **T-403** (B) Onboarding flow (goal, experience, notifications, disclaimer) gated by kv-store flag. *Needs:* T-401
+- [x] **T-404** (You/C) Host privacy policy + terms + support page; put URLs in `src/constants/links.ts`. _Done: site/ + Pages workflow + links.ts. **You:** repo Settings → Pages → Source "GitHub Actions"; replace [COMPANY / YOUR NAME], [SUPPORT EMAIL], [DATE] in site/, legal/ and `Links.supportEmail`._
 
 ## Day 5 — Money
 
 - [ ] **T-501** (You) RevenueCat: entitlement `pro`, offering `default`, products monthly/yearly in App Store Connect + Play Console; paste API keys into `.env`.
 - [ ] **T-502** (A) `lib/purchases.ts`: configure, `useIsPro()`, offline cache, restore. *Needs:* T-501
-- [ ] **T-503** (B) Paywall modal (RevenueCatUI) + `ProGate` component + all gates from PRD §4. *Needs:* T-502
+- [ ] **T-503** (B) Paywall modal (RevenueCatUI) + `ProGate` component + all gates from PRD §4. _Also: pass `maxProtocols: 1` to `syncReminders` for free users (planner already supports it); paywall at end of onboarding._ *Needs:* T-502
 - [ ] **T-504** (B) Settings screen. *Needs:* T-502, T-404
 - [ ] **T-505** (A) CSV export via share sheet (Pro). *Needs:* T-301
 - [ ] **T-506** (You) First `eas build -p android --profile production` → Play closed testing; invite testers.

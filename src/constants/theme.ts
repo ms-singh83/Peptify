@@ -17,6 +17,7 @@ export const Colors = {
     warning: '#B45309',
     danger: '#B91C1C',
     pro: '#7C3AED',
+    overlay: 'rgba(0,0,0,0.35)',
   },
   dark: {
     primary: '#2DD4BF',
@@ -31,6 +32,7 @@ export const Colors = {
     warning: '#F59E0B',
     danger: '#EF4444',
     pro: '#A78BFA',
+    overlay: 'rgba(0,0,0,0.6)',
   },
 } as const;
 

@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import { router } from 'expo-router';
 import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native';
 
-import { EmptyState, Screen, Text } from '@/components/ui';
+import { Button, EmptyState, Screen, Text } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useStreak } from '@/features/history/hooks';
 import { quickLogInput, useLogDose, useToday, useUndoDose } from '@/features/today/hooks';
@@ -76,6 +76,7 @@ export default function TodayScreen() {
           </View>
         ))
       )}
+      {!isLoading ? <Button title="View history" variant="secondary" onPress={() => router.push('/history')} /> : null}
     </Screen>
   );
 }

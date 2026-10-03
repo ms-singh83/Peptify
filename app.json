@@ -1,14 +1,17 @@
 {
   "expo": {
-    "name": "Peptify",
-    "slug": "Peptify",
+    "name": "PEPTIFY",
+    "slug": "PEPTIFY",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "peptify",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "bundleIdentifier": "com.nirvanalabs.peptify"
+      "bundleIdentifier": "com.nirvanalabs.peptify",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.nirvanalabs.peptify",
@@ -40,6 +43,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "90167a16-2a27-4354-b8e2-22b5260ef973"
+      }
     }
   }
 }

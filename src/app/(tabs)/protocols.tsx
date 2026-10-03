@@ -56,6 +56,16 @@ export default function ProtocolsScreen() {
           ))}
         </Card>
       )}
+      <ListRow
+        title="Vials & inventory"
+        subtitle="Track what's left in each vial"
+        onPress={() => router.push('/vials')}
+        right={
+          <Text variant="headline" color="textSecondary">
+            ›
+          </Text>
+        }
+      />
     </Screen>
   );
 }

@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { Button, Card, Disclaimer, NumberField, Screen, SegmentedControl, Text } from '@/components/ui';
@@ -64,7 +65,16 @@ export default function CalculatorScreen() {
       </View>
 
       {result ? (
-        <ResultCard result={result} syringe={fields.syringe} />
+        <>
+          <ResultCard result={result} syringe={fields.syringe} />
+          <Button
+            title="Save as vial"
+            variant="secondary"
+            onPress={() =>
+              router.push({ pathname: '/vials/form', params: { totalMg: fields.vialMg, waterMl: fields.waterMl } })
+            }
+          />
+        </>
       ) : (
         <Card>
           <Text color="textSecondary">Enter the vial amount, water added and your dose to see how many units to draw.</Text>

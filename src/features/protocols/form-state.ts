@@ -27,7 +27,6 @@ export type ProtocolFormState = {
   hasEndDate: boolean;
   endDate: ISODate;
   notes: string;
-  /** Not edited in this form yet (vials link in T-305); carried so edits don't unlink it. */
   vialId: string | null;
 };
 

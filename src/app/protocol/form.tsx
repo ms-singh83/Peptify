@@ -19,6 +19,7 @@ import { useProtocol, useSaveProtocol } from '@/features/protocols/hooks';
 import { PeptidePicker } from '@/features/protocols/peptide-picker';
 import { ScheduleSection } from '@/features/protocols/schedule-section';
 import { TimesSection } from '@/features/protocols/times-section';
+import { VialSection } from '@/features/protocols/vial-section';
 import { toISODate } from '@/lib/dates';
 import { DOSE_UNITS, type DoseUnit } from '@/types/domain';
 
@@ -113,6 +114,8 @@ export default function ProtocolFormScreen() {
 
         <ScheduleSection form={form} update={update} error={errors.schedule} />
         <TimesSection times={form.times} onChange={(times) => update({ times })} error={errors.times} />
+
+        <VialSection vialId={form.vialId} peptideSlug={form.peptideSlug} onChange={(vialId) => update({ vialId })} />
 
         <View style={styles.group}>
           <FieldLabel>Dates</FieldLabel>

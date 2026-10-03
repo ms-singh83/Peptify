@@ -19,18 +19,18 @@ A task's "Needs" must be done first. Tasks without a shared "Needs" can run in p
 
 ## Day 2 — Protocols
 
-- [ ] **T-201** (A) `lib/schedule.ts`: `occurrences(protocol, fromDate, toDate)` for daily/weekdays/interval/cycle + tests incl. DST and end dates. *Needs:* T-102
-- [ ] **T-202** (A) `protocolsRepo` CRUD + react-query hooks (`useProtocols`, `useProtocol`, mutations). *Needs:* T-103
-- [ ] **T-203** (B) Protocol form (create/edit) with zod validation. *Needs:* T-106, T-202
-- [ ] **T-204** (B) Protocols list (Active/Paused/Ended) + detail screen. *Needs:* T-202
-- [ ] **T-205** (A) `useToday()` hook: occurrences + doses merged → slots with status. *Needs:* T-201, T-202
-- [ ] **T-206** (B) Today screen with Taken/Skip buttons (wired in T-302). *Needs:* T-205
-- [ ] **T-207** (C) Store listing copy draft → `docs/STORE_LISTING.md`.
+- [x] **T-201** (A) `lib/schedule.ts`: `occurrences(protocol, fromDate, toDate)` for daily/weekdays/interval/cycle + tests incl. DST and end dates. *Needs:* T-102
+- [x] **T-202** (A) `protocolsRepo` CRUD + react-query hooks (`useProtocols`, `useProtocol`, mutations). *Needs:* T-103
+- [x] **T-203** (B) Protocol form (create/edit) with zod validation. *Needs:* T-106, T-202
+- [x] **T-204** (B) Protocols list (Active/Paused/Ended) + detail screen. *Needs:* T-202
+- [x] **T-205** (A) `useToday()` hook: occurrences + doses merged → slots with status. *Needs:* T-201, T-202
+- [x] **T-206** (B) Today screen with Taken/Skip buttons (wired in T-302). *Needs:* T-205
+- [x] **T-207** (C) Store listing copy draft → `docs/STORE_LISTING.md`.
 
 ## Day 3 — Logging & inventory
 
-- [ ] **T-301** (A) `dosesRepo` + `vialsRepo`; log dose transaction decrements vial. Tests for vial math. *Needs:* T-103
-- [ ] **T-302** (B) Dose sheet (time, amount, site grid, note) + wire Today buttons. *Needs:* T-301
+- [~] **T-301** (A) `dosesRepo` + `vialsRepo`; log dose transaction decrements vial. Tests for vial math. *Needs:* T-103 _Note: logDose/deleteDose with atomic vial decrement/restore done early (Day 2) for Today; remaining: vial CRUD hooks + streak/history queries._
+- [ ] **T-302** (B) Dose sheet (time, amount, site grid, note) + wire Today buttons. _Today buttons already quick-log (Day 2); sheet adds site/time/amount edits._ *Needs:* T-301
 - [ ] **T-303** (A) `lib/sites.ts`: suggest least-recently-used site + tests. *Needs:* T-102
 - [ ] **T-304** (B) History screen: month calendar dots + day list. *Needs:* T-301
 - [ ] **T-305** (B) Vials list + form + detail (remaining bar, expiry warnings). *Needs:* T-301

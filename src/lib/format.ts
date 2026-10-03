@@ -34,3 +34,18 @@ export function describeTimes(times: TimeOfDay[]): string {
 export function weekdayLabel(d: Weekday): string {
   return WEEKDAY_SHORT[d];
 }
+
+export type Time12 = { hour: number; minute: number; pm: boolean };
+
+/** "20:05" → { hour: 8, minute: 5, pm: true }. */
+export function toTime12(t: TimeOfDay): Time12 {
+  const h = Number(t.slice(0, 2));
+  const minute = Number(t.slice(3, 5));
+  return { hour: h % 12 === 0 ? 12 : h % 12, minute, pm: h >= 12 };
+}
+
+/** { hour: 12, minute: 0, pm: false } → "00:00". */
+export function fromTime12({ hour, minute, pm }: Time12): TimeOfDay {
+  const h = (hour % 12) + (pm ? 12 : 0);
+  return `${String(h).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}

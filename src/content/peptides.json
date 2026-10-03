@@ -1,0 +1,440 @@
+[
+  {
+    "slug": "bpc-157",
+    "name": "BPC-157",
+    "aliases": ["Body Protection Compound 157", "Pentadecapeptide BPC 157"],
+    "category": "recovery",
+    "free": true,
+    "summary": "A 15-amino-acid peptide originally identified in gastric juice. Research in animal models has studied BPC-157 for its effects on tissue repair and healing of muscles, tendons, ligaments, and bone.",
+    "studiedFor": ["tendon healing in animal models", "muscle and ligament regeneration", "angiogenesis and blood vessel formation", "fibroblast activity"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 30 days.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "Gastric pentadecapeptide body protection compound BPC 157 and its role in accelerating musculoskeletal soft tissue healing",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/30915550/"
+      }
+    ]
+  },
+  {
+    "slug": "tb-500",
+    "name": "TB-500",
+    "aliases": ["Thymosin Beta-4", "Thymosin β4"],
+    "category": "recovery",
+    "free": true,
+    "summary": "A synthetic peptide derived from thymosin beta-4, a protein found throughout the body. Has been studied in animal models for effects on cell migration, tissue repair, and angiogenesis.",
+    "studiedFor": ["cell migration and actin regulation", "angiogenesis in wound healing", "systemic tissue regeneration", "inflammation modulation"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 30 days.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "Thymosin Beta-4 Modulates Cardiac Remodeling by Regulating ROCK1 Expression in Adult Mammals",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12072014/"
+      }
+    ]
+  },
+  {
+    "slug": "ipamorelin",
+    "name": "Ipamorelin",
+    "aliases": ["NNC 26-0148"],
+    "category": "gh-secretagogue",
+    "free": true,
+    "summary": "A selective growth hormone secretagogue pentapeptide. Has been studied for stimulating growth hormone release via pituitary somatotroph cells, with selectivity that does not trigger ACTH or cortisol release.",
+    "studiedFor": ["growth hormone secretion in animal models", "bone formation and density", "muscle strength"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 30 days.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "Ipamorelin, the first selective growth hormone secretagogue",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/9849822/"
+      }
+    ]
+  },
+  {
+    "slug": "ghk-cu",
+    "name": "GHK-Cu",
+    "aliases": ["Copper peptide", "Glycyl-L-histidyl-L-lysine copper complex"],
+    "category": "skin-hair",
+    "free": true,
+    "summary": "A naturally occurring copper peptide complex found in human plasma. Has been studied topically and in vitro for effects on collagen synthesis, fibroblast activity, and skin remodeling.",
+    "studiedFor": ["collagen and elastin synthesis", "fibroblast proliferation", "wound healing", "skin firmness and elasticity in topical studies"],
+    "storage": "Refrigerate; protect from light. Topical or reconstituted form stable for 30 days at 4C.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "The human tri-peptide GHK and tissue remodeling",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/18644225/"
+      }
+    ]
+  },
+  {
+    "slug": "semaglutide",
+    "name": "Semaglutide",
+    "aliases": ["Ozempic", "Wegovy"],
+    "category": "metabolic",
+    "free": true,
+    "summary": "A GLP-1 receptor agonist approved by the FDA for type 2 diabetes (Ozempic, 2017) and weight management (Wegovy, 2021). Acts on GLP-1 pathways to regulate appetite and glucose metabolism.",
+    "studiedFor": ["glycemic control in type 2 diabetes", "weight reduction and weight maintenance", "cardiovascular risk reduction in diabetes"],
+    "halfLifeHours": 168,
+    "halfLifeNote": "Approximate half-life for once-weekly dosing.",
+    "storage": "Refrigerate 2-8°C. Do not freeze. Pens in use may be stored at room temperature for up to 30 days.",
+    "researchStatus": "approved-drug",
+    "references": [
+      {
+        "title": "Semaglutide for type 2 diabetes",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7450779/"
+      }
+    ]
+  },
+  {
+    "slug": "cjc-1295-no-dac",
+    "name": "CJC-1295 (no DAC)",
+    "aliases": ["Modified GRF(1-29)", "GHRH analog"],
+    "category": "gh-secretagogue",
+    "free": false,
+    "summary": "A synthetic GHRH analog that binds GHRH receptors on pituitary somatotroph cells. Has been studied for stimulating growth hormone and IGF-1 secretion in animal and limited human research.",
+    "studiedFor": ["growth hormone and IGF-1 stimulation", "pituitary somatotroph proliferation", "GH axis activation in animal models"],
+    "halfLifeHours": 0.5,
+    "halfLifeNote": "Short half-life without DAC extension.",
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 3-7 days.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "Once-daily administration of CJC-1295, a long-acting growth hormone-releasing hormone (GHRH) analog, normalizes growth in the GHRH knockout mouse",
+        "url": "https://journals.physiology.org/doi/full/10.1152/ajpendo.00201.2006"
+      }
+    ]
+  },
+  {
+    "slug": "cjc-1295-dac",
+    "name": "CJC-1295 DAC",
+    "aliases": ["CJC-1295 with DAC", "GHRH analog with drug affinity complex"],
+    "category": "gh-secretagogue",
+    "free": false,
+    "summary": "CJC-1295 with a drug affinity complex (DAC) that binds to albumin for extended circulation. Has been studied for prolonged growth hormone and IGF-1 stimulation with a longer half-life than the non-DAC form.",
+    "studiedFor": ["sustained GH and IGF-1 secretion", "pituitary somatotroph proliferation", "GH axis activation in limited human research"],
+    "halfLifeHours": 168,
+    "halfLifeNote": "Approximately 6-8 days with albumin binding.",
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 7-14 days.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "Prolonged Stimulation of Growth Hormone (GH) and Insulin-Like Growth Factor I Secretion by CJC-1295, a Long-Acting Analog of GH-Releasing Hormone, in Healthy Adults",
+        "url": "https://academic.oup.com/jcem/article-abstract/91/3/799/2843281"
+      }
+    ]
+  },
+  {
+    "slug": "tesamorelin",
+    "name": "Tesamorelin",
+    "aliases": ["Egrifta", "Growth hormone-releasing factor analog"],
+    "category": "gh-secretagogue",
+    "free": false,
+    "summary": "A synthetic 44-amino-acid GHRH analog approved by the FDA in 2010 for lipodystrophy associated with HIV. Stimulates growth hormone release via pituitary GHRH receptors.",
+    "studiedFor": ["visceral adipose tissue reduction in HIV lipodystrophy", "abdominal fat distribution", "metabolic parameters in clinical trials"],
+    "halfLifeHours": 0.5,
+    "halfLifeNote": "Approximately 26-38 minutes per FDA label.",
+    "storage": "Refrigerate. Reconstituted solution use within 24 hours.",
+    "researchStatus": "approved-drug",
+    "references": [
+      {
+        "title": "Tesamorelin: a growth hormone-releasing factor analogue for HIV-associated lipodystrophy",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/22298602/"
+      }
+    ]
+  },
+  {
+    "slug": "sermorelin",
+    "name": "Sermorelin",
+    "aliases": ["Geref", "GRH(1-29)", "Somatrelin"],
+    "category": "gh-secretagogue",
+    "free": false,
+    "summary": "A synthetic 29-amino-acid GHRH peptide. FDA-approved in 1997 for pediatric growth hormone deficiency diagnosis and treatment; commercial production discontinued in 2008. Available through compounding pharmacies.",
+    "studiedFor": ["GH axis activation", "pediatric growth failure (historical approval)", "adult GH secretion in limited research"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 24 hours.",
+    "researchStatus": "limited",
+    "references": [
+      {
+        "title": "Growth hormone secretagogues: history, mechanism of action, and clinical development",
+        "url": "https://onlinelibrary.wiley.com/doi/full/10.1002/rco2.9"
+      }
+    ]
+  },
+  {
+    "slug": "tirzepatide",
+    "name": "Tirzepatide",
+    "aliases": ["Zepbound", "Mounjaro"],
+    "category": "metabolic",
+    "free": false,
+    "summary": "A 39-amino-acid synthetic peptide dual GIP/GLP-1 receptor agonist approved by the FDA for type 2 diabetes (2022) and weight management (Zepbound). Acts on both GIP and GLP-1 pathways.",
+    "studiedFor": ["glycemic control in type 2 diabetes", "weight reduction in clinical trials", "body composition changes"],
+    "halfLifeHours": 120,
+    "halfLifeNote": "Approximately 5 days; once-weekly subcutaneous administration.",
+    "storage": "Refrigerate 2-8°C. Pens in use may be stored at room temperature for up to 21 days.",
+    "researchStatus": "approved-drug",
+    "references": [
+      {
+        "title": "Clinical perspectives on the use of the GIP/GLP-1 receptor agonist tirzepatide for the treatment of type-2 diabetes and obesity",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9606350/"
+      }
+    ]
+  },
+  {
+    "slug": "retatrutide",
+    "name": "Retatrutide",
+    "aliases": ["LY3437943", "Triple GLP-1/GIP/glucagon agonist"],
+    "category": "metabolic",
+    "free": false,
+    "summary": "A novel triple GLP-1/GIP/glucagon receptor agonist in Phase 3 clinical trials. Has been studied for weight reduction and metabolic effects by targeting three hormone pathways simultaneously.",
+    "studiedFor": ["weight reduction in clinical trials", "metabolic homeostasis in obesity", "glucose control"],
+    "storage": "Refrigerate 2-8°C. Protect from light.",
+    "researchStatus": "clinical-trials",
+    "references": [
+      {
+        "title": "Triple–Hormone-Receptor Agonist Retatrutide for Obesity — A Phase 2 Trial",
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972"
+      }
+    ]
+  },
+  {
+    "slug": "aod-9604",
+    "name": "AOD-9604",
+    "aliases": ["HGH Fragment 176-191", "Growth hormone C-terminal fragment"],
+    "category": "metabolic",
+    "free": false,
+    "summary": "A 16-amino-acid synthetic fragment of human growth hormone (residues 176-191). Has been studied in preclinical models for lipid metabolism; human trials did not demonstrate weight loss benefit.",
+    "studiedFor": ["lipid metabolism in animal models", "adipocyte lipolysis (in vitro)", "potential metabolic effects"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 7 days.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "Increase of fat oxidation and weight loss in obese mice caused by chronic treatment with human growth hormone or a modified C-terminal fragment",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/11673763/"
+      }
+    ]
+  },
+  {
+    "slug": "mots-c",
+    "name": "MOTS-c",
+    "aliases": ["Mitochondrial-encoded peptide", "Mitochondrial open reading frame of the 12S rRNA type-c"],
+    "category": "metabolic",
+    "free": false,
+    "summary": "A peptide encoded by mitochondrial DNA discovered in 2015. Has been studied for metabolic homeostasis, exercise response, and age-related metabolic decline in animal models.",
+    "studiedFor": ["metabolic homeostasis", "glucose uptake and lipid metabolism", "age-related decline in physical capacity", "exercise-induced adaptations"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 7 days.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "MOTS-c, the Most Recent Mitochondrial Derived Peptide in Human Aging and Age-Related Diseases",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9570330/"
+      }
+    ]
+  },
+  {
+    "slug": "selank",
+    "name": "Selank",
+    "aliases": ["Selank peptide", "Heptapeptide anxiolytic"],
+    "category": "cognitive",
+    "free": false,
+    "summary": "A synthetic heptapeptide developed in Russia derived from tuftsin. Has been studied for anxiolytic and cognitive-enhancing effects; approved for anxiety disorders in Russia but not FDA-approved.",
+    "studiedFor": ["generalized anxiety disorder", "cognitive function and learning", "neurotransmitter modulation", "mood in animal and clinical studies"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 3 days.",
+    "researchStatus": "limited",
+    "references": [
+      {
+        "title": "Efficacy and possible mechanisms of action of a new peptide anxiolytic selank in the therapy of generalized anxiety disorders and neurasthenia",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/18454096/"
+      }
+    ]
+  },
+  {
+    "slug": "semax",
+    "name": "Semax",
+    "aliases": ["ACTH(4-10) Pro-Gly-Pro", "Nootropic peptide"],
+    "category": "cognitive",
+    "free": false,
+    "summary": "A synthetic heptapeptide derived from ACTH developed in Russia. Has been studied for nootropic and neuroprotective effects including enhancement of memory, learning, and neural protection.",
+    "studiedFor": ["memory and learning enhancement", "neuroprotection against oxidative stress", "attention and focus", "neurodegeneration in animal models"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 3 days.",
+    "researchStatus": "limited",
+    "references": [
+      {
+        "title": "Semax, an analogue of adrenocorticotropin (4-10), is a potential agent for the treatment of attention-deficit hyperactivity disorder and Rett syndrome",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16996699/"
+      }
+    ]
+  },
+  {
+    "slug": "dsip",
+    "name": "DSIP",
+    "aliases": ["Delta sleep-inducing peptide", "Sleep-promoting peptide"],
+    "category": "sleep",
+    "free": false,
+    "summary": "A naturally occurring nonapeptide first isolated from rabbit brain. Has been studied for effects on sleep parameters and EEG delta rhythms; clinical evidence for sleep benefit is mixed.",
+    "studiedFor": ["sleep induction in animal models", "EEG delta rhythm", "sleep efficiency in limited clinical trials", "HPA axis modulation"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 3 days.",
+    "researchStatus": "limited",
+    "references": [
+      {
+        "title": "Effects of delta sleep-inducing peptide on sleep of chronic insomniac patients",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/1299794/"
+      }
+    ]
+  },
+  {
+    "slug": "epitalon",
+    "name": "Epitalon",
+    "aliases": ["Epithalon", "Pineal peptide", "Tetrapeptide AEDG"],
+    "category": "other",
+    "free": false,
+    "summary": "A four-amino-acid peptide derived from bovine pineal gland. Has been studied in vitro and in animal models for telomerase activation and telomere elongation; human clinical trials are absent.",
+    "studiedFor": ["telomerase activation in cell cultures", "telomere elongation in human fibroblasts (in vitro)", "lifespan extension in rodent models", "melatonin synthesis modulation"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 3 days.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "Overview of Epitalon—Highly Bioactive Pineal Tetrapeptide with Promising Properties",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11943447/"
+      }
+    ]
+  },
+  {
+    "slug": "pt-141",
+    "name": "PT-141",
+    "aliases": ["Bremelanotide", "Vyleesi", "Melanocortin receptor agonist"],
+    "category": "other",
+    "free": false,
+    "summary": "A melanocortin receptor agonist approved by the FDA in 2019 (Vyleesi) for acquired hypoactive sexual desire disorder in premenopausal women. Acts on dopamine-linked desire pathways in the hypothalamus.",
+    "studiedFor": ["sexual desire in women (FDA-approved)", "sexual arousal in men (investigational)", "melanocortin receptor signaling"],
+    "halfLifeHours": 2.7,
+    "halfLifeNote": "Mean terminal half-life approximately 2.7 hours per FDA Vyleesi label.",
+    "storage": "Refrigerate 2-8°C. Do not freeze. Auto-injector stable for 30 days at room temperature.",
+    "researchStatus": "approved-drug",
+    "references": [
+      {
+        "title": "VYLEESI (bremelanotide injection)",
+        "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/210557s000lbl.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "melanotan-ii",
+    "name": "Melanotan II",
+    "aliases": ["MT-II", "Melanocortin agonist"],
+    "category": "skin-hair",
+    "free": false,
+    "summary": "A non-selective melanocortin peptide agonist studied for pigmentation and sexual function. Has been investigated for tanning effects and as a precursor to PT-141 development.",
+    "studiedFor": ["eumelanin production and tanning", "sexual arousal in animal and early human studies", "melanocortin receptor signaling"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 7 days.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "The melanocortin agonist, melanotan II, enhances proceptive sexual behaviors in the female rat",
+        "url": "https://www.sciencedirect.com/science/article/abs/pii/S009130570600325X"
+      }
+    ]
+  },
+  {
+    "slug": "thymosin-alpha-1",
+    "name": "Thymosin Alpha-1",
+    "aliases": ["Tα1", "Zadaxin"],
+    "category": "other",
+    "free": false,
+    "summary": "A 28-amino-acid peptide produced by the thymus. Has been studied for immunomodulatory effects including T-cell activation, dendritic cell maturation, and immune response enhancement.",
+    "studiedFor": ["T-cell differentiation and Th1 polarization", "dendritic cell maturation", "sepsis management in clinical trials", "cancer immunotherapy (investigational)"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 24 hours.",
+    "researchStatus": "limited",
+    "references": [
+      {
+        "title": "Thymosin alpha1 based immunomodulatory therapy for sepsis: a systematic review and meta-analysis",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/25532482/"
+      }
+    ]
+  },
+  {
+    "slug": "kpv",
+    "name": "KPV",
+    "aliases": ["Alpha-MSH fragment", "Anti-inflammatory tripeptide"],
+    "category": "recovery",
+    "free": false,
+    "summary": "A three-amino-acid fragment derived from alpha-melanocyte-stimulating hormone. Has been studied for anti-inflammatory effects via NF-kB inhibition in cell and animal models.",
+    "studiedFor": ["NF-kB inhibition and inflammation reduction", "intestinal barrier function in animal models", "inflammatory signaling pathways"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 3 days.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "Inhibition of cellular and systemic inflammation cues in human bronchial epithelial cells by melanocortin-related peptides",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3403564/"
+      }
+    ]
+  },
+  {
+    "slug": "ll-37",
+    "name": "LL-37",
+    "aliases": ["Human cathelicidin", "Antimicrobial peptide"],
+    "category": "recovery",
+    "free": false,
+    "summary": "The only human cathelicidin antimicrobial peptide. Has been studied for antimicrobial, immunomodulatory, and tissue repair effects in animal and limited human research.",
+    "studiedFor": ["antimicrobial activity against bacteria and fungi", "innate immune response modulation", "wound healing in clinical trials", "anti-inflammatory mechanisms"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 3 days.",
+    "researchStatus": "limited",
+    "references": [
+      {
+        "title": "LL-37: Cathelicidin-related antimicrobial peptide with pleiotropic activity",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/27117377/"
+      }
+    ]
+  },
+  {
+    "slug": "nad-plus",
+    "name": "NAD+",
+    "aliases": ["Nicotinamide adenine dinucleotide", "NAD"],
+    "category": "metabolic",
+    "free": false,
+    "summary": "A coenzyme found in all living cells involved in metabolic reactions and cellular signaling. Has been studied for decline with aging and potential benefits via precursor compounds like NMN in animal models.",
+    "studiedFor": ["cellular metabolism and energy production", "DNA repair and sirtuins activation", "aging processes in animal models", "mitochondrial function"],
+    "halfLifeNote": "Cellular half-life is brief; injectable NAD+ pharmacokinetics in humans limited. Research focuses on NAD+ precursors like NMN and NR.",
+    "storage": "Lyophilized: refrigerate. Room temperature stability varies by formulation.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "NAD+ in aging, metabolism, and neurodegeneration",
+        "url": "https://www.science.org/doi/10.1126/science.aac4854"
+      }
+    ]
+  },
+  {
+    "slug": "kisspeptin-10",
+    "name": "Kisspeptin-10",
+    "aliases": ["KP-10", "Metastin"],
+    "category": "other",
+    "free": false,
+    "summary": "A 10-amino-acid neuropeptide derived from the KISS1 gene. Has been studied for stimulation of gonadotropin-releasing hormone and reproductive hormone release in animal and human research.",
+    "studiedFor": ["gonadotropin-releasing hormone stimulation", "luteinizing hormone and follicle-stimulating hormone release", "reproductive function in animal models", "potential infertility treatment (investigational)"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 3 days.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "Effects of Kisspeptin-10 on Reproductive Hormone Release Show Sexual Dimorphism in Humans",
+        "url": "https://academic.oup.com/jcem/article-abstract/96/12/E1963/2834843"
+      }
+    ]
+  },
+  {
+    "slug": "hexarelin",
+    "name": "Hexarelin",
+    "aliases": ["Growth hormone secretagogue", "GHS analog"],
+    "category": "gh-secretagogue",
+    "free": false,
+    "summary": "A synthetic analog of GHRP-6 and growth hormone secretagogue. Has been studied in animal models for growth hormone release and effects on cardiac function, metabolism, and neuroprotection.",
+    "studiedFor": ["growth hormone secretion in animal models", "cardiac function and mitochondrial protection", "metabolic effects on lipids and glucose", "neurogenesis in hippocampus"],
+    "storage": "Lyophilized: refrigerate. Reconstituted: refrigerate, use within 7 days.",
+    "researchStatus": "preclinical",
+    "references": [
+      {
+        "title": "Growth Hormone Secretagogue Hexarelin Improves Cardiac Function in Rats after Experimental Myocardial Infarction",
+        "url": "https://academic.oup.com/endo/article-abstract/141/1/60/2987850"
+      }
+    ]
+  }
+]

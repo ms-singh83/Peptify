@@ -81,6 +81,8 @@ export type Dose = {
   unit: DoseUnit | null;
   site: InjectionSite | null;
   notes: string | null;
+  /** Vial the amount was drawn from (set automatically from the protocol). */
+  vialId: string | null;
   createdAt: ISODateTime;
 };
 

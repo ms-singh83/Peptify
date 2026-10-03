@@ -58,6 +58,10 @@ export const MIGRATIONS: string[] = [
   CREATE INDEX idx_doses_taken_at ON doses(taken_at);
   CREATE INDEX idx_doses_scheduled_for ON doses(scheduled_for);
   `,
+  // v2: remember which vial a dose came from, so undo restores the right vial.
+  `
+  ALTER TABLE doses ADD COLUMN vial_id TEXT REFERENCES vials(id) ON DELETE SET NULL;
+  `,
 ];
 
 export async function migrateDbIfNeeded(db: SQLiteDatabase): Promise<void> {

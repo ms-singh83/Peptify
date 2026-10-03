@@ -45,6 +45,7 @@ export type DoseRow = {
   site: string | null;
   notes: string | null;
   created_at: string;
+  vial_id: string | null;
 };
 
 export type VialRow = {
@@ -122,6 +123,7 @@ export function doseFromRow(r: DoseRow): Dose {
     unit: r.unit as DoseUnit | null,
     site: r.site as InjectionSite | null,
     notes: r.notes,
+    vialId: r.vial_id,
     createdAt: r.created_at,
   };
 }

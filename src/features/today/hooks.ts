@@ -50,7 +50,11 @@ function useInvalidateDoses() {
 export function useLogDose() {
   const db = useSQLiteContext();
   const invalidate = useInvalidateDoses();
-  return useMutation({ mutationFn: (input: DoseInput) => logDose(db, input), onSuccess: invalidate });
+  return useMutation({
+    mutationFn: ({ input, replaceDoseId }: { input: DoseInput; replaceDoseId?: string }) =>
+      logDose(db, input, replaceDoseId),
+    onSuccess: invalidate,
+  });
 }
 
 export function useUndoDose() {

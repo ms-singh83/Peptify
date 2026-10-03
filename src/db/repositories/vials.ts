@@ -45,15 +45,24 @@ export async function listAllVials(db: SQLiteDatabase): Promise<Vial[]> {
   return rows.map(vialFromRow);
 }
 
-/** Edit vial details. Changing the total resets what's left to the new total minus what was already drawn. */
+/**
+ * Edit vial details. Changing the total keeps what was already drawn (new total − used).
+ * Status follows: an empty vial with amount left becomes active, an active one at 0 becomes empty;
+ * discarded stays discarded. (SQLite evaluates every right-hand side with the OLD row values.)
+ */
 export async function updateVial(db: SQLiteDatabase, id: string, input: VialInput): Promise<void> {
   await db.runAsync(
     `UPDATE vials SET peptide_slug = ?, custom_name = ?,
+       status = CASE
+         WHEN status = 'discarded' THEN status
+         WHEN ? * 1000 - (total_mg * 1000 - remaining_mcg) > 0 THEN 'active'
+         ELSE 'empty' END,
        remaining_mcg = MAX(? * 1000 - (total_mg * 1000 - remaining_mcg), 0),
        total_mg = ?, water_ml = ?, reconstituted_at = ?, expires_at = ?
      WHERE id = ?`,
     input.peptideSlug,
     input.customName,
+    input.totalMg,
     input.totalMg,
     input.totalMg,
     input.waterMl,

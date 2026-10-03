@@ -44,7 +44,9 @@ export function DayDetail({ day, protocols }: Props) {
                 ? () =>
                     router.push({
                       pathname: '/dose',
-                      params: d.scheduledFor ? { protocolId: p.id, scheduledFor: d.scheduledFor } : { protocolId: p.id },
+                      params: d.scheduledFor
+                        ? { protocolId: p.id, scheduledFor: d.scheduledFor }
+                        : { protocolId: p.id, doseId: d.id },
                     })
                 : undefined
             }

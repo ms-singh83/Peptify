@@ -37,9 +37,9 @@ export function useMonthHistory(month: Date) {
   return useHistoryRange(toISODate(startOfMonth(month)), toISODate(endOfMonth(month)));
 }
 
-/** Streak over the last 120 days. */
+/** Current streak, looking back up to a year (longer streaks display as 365). */
 export function useStreak() {
   const now = useNow();
-  const { days } = useHistoryRange(toISODate(addDays(now, -120)), toISODate(now));
+  const { days } = useHistoryRange(toISODate(addDays(now, -365)), toISODate(now));
   return days ? currentStreak(days, now) : 0;
 }

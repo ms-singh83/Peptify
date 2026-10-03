@@ -63,7 +63,7 @@ export default function TodayScreen() {
                 key={slot.occurrence.scheduledFor + slot.protocol.id}
                 slot={slot}
                 busy={busy}
-                onLog={(status) => log.mutate(quickLogInput(slot, status), { onError: fail })}
+                onLog={(status) => log.mutate({ input: quickLogInput(slot, status) }, { onError: fail })}
                 onUndo={() => slot.dose && undo.mutate(slot.dose.id, { onError: fail })}
                 onOpen={() =>
                   router.push({

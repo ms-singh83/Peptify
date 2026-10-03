@@ -69,7 +69,8 @@ export default function VialFormScreen() {
     if (!parsed.success) {
       for (const issue of parsed.error.issues) {
         const key = String(issue.path[0]);
-        if (key === 'totalMg') e.totalMg ??= 'Enter the mg in the vial';
+        if (key === 'customName') e.name ??= issue.message;
+        else if (key === 'totalMg') e.totalMg ??= 'Enter the mg in the vial';
         else if (key === 'waterMl') e.waterMl ??= 'Enter the mL of water added';
         else if (key === 'expiresAt' || key === 'reconstitutedAt') e.dates ??= issue.message;
       }
@@ -89,7 +90,19 @@ export default function VialFormScreen() {
 
   const v = existing.data;
   const changeStatus = (status: 'empty' | 'discarded' | 'active') =>
-    id && setStatus.mutate({ id, status }, { onSuccess: () => router.back() });
+    id &&
+    setStatus.mutate(
+      { id, status },
+      {
+        onSuccess: () => router.back(),
+        onError: (err) => Alert.alert('Could not update', err instanceof Error ? err.message : 'Please try again.'),
+      },
+    );
+  const confirmDiscard = () =>
+    Alert.alert('Discard this vial?', 'It stops being used for new doses. Unsaved edits on this screen are lost.', [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Discard', style: 'destructive', onPress: () => changeStatus('discarded') },
+    ]);
 
   return (
     <>
@@ -142,7 +155,7 @@ export default function VialFormScreen() {
             {v.status === 'active' ? (
               <>
                 <Button title="Mark as empty" variant="secondary" onPress={() => changeStatus('empty')} />
-                <Button title="Discard vial" variant="destructive" onPress={() => changeStatus('discarded')} />
+                <Button title="Discard vial" variant="destructive" onPress={confirmDiscard} />
               </>
             ) : (
               <Button title="Mark as active again" variant="secondary" onPress={() => changeStatus('active')} />

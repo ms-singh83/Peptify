@@ -17,7 +17,7 @@ import {
 } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { SiteGrid } from '@/features/doses/site-grid';
-import { useDoseForSlot, useSiteUses } from '@/features/doses/hooks';
+import { useDose, useDoseForSlot, useSiteUses } from '@/features/doses/hooks';
 import { displayName } from '@/features/library/peptides';
 import { useProtocol } from '@/features/protocols/hooks';
 import { useLogDose, useUndoDose } from '@/features/today/hooks';
@@ -25,18 +25,27 @@ import { toISODate } from '@/lib/dates';
 import { formatTime } from '@/lib/format';
 import { parseDecimal } from '@/lib/number';
 import { suggestSite } from '@/lib/sites';
-import type { DoseStatus, InjectionSite } from '@/types/domain';
+import type { DoseStatus, DoseUnit, InjectionSite } from '@/types/domain';
 
 const STATUS_OPTIONS = [
   { value: 'taken', label: 'Taken' },
   { value: 'skipped', label: 'Skipped' },
 ] as const satisfies readonly { value: DoseStatus; label: string }[];
 
-/** Log or edit one dose. Params: protocolId (required), scheduledFor (omit for an extra, unscheduled dose). */
+/**
+ * Log or edit one dose. Params: protocolId (required); scheduledFor for a scheduled slot;
+ * doseId to edit an extra (unscheduled) dose. Neither → new extra dose.
+ */
 export default function DoseSheet() {
-  const { protocolId, scheduledFor } = useLocalSearchParams<{ protocolId: string; scheduledFor?: string }>();
+  const { protocolId, scheduledFor, doseId } = useLocalSearchParams<{
+    protocolId: string;
+    scheduledFor?: string;
+    doseId?: string;
+  }>();
   const protocol = useProtocol(protocolId);
-  const existing = useDoseForSlot(protocolId, scheduledFor);
+  const bySlot = useDoseForSlot(protocolId, scheduledFor);
+  const byId = useDose(scheduledFor ? undefined : doseId);
+  const existing = scheduledFor ? bySlot : byId;
   const siteUses = useSiteUses();
   const log = useLogDose();
   const undo = useUndoDose();
@@ -46,16 +55,20 @@ export default function DoseSheet() {
   const [date, setDate] = useState(toISODate(now));
   const [time, setTime] = useState(format(now, 'HH:mm'));
   const [amount, setAmount] = useState('');
+  // A logged dose keeps the unit it was logged in, even if the protocol's unit changed later.
+  const [unit, setUnit] = useState<DoseUnit>('mcg');
   const [site, setSite] = useState<InjectionSite | null>(null);
   const [notes, setNotes] = useState('');
   const [ready, setReady] = useState(false);
 
   const suggested = useMemo(() => (siteUses.data ? suggestSite(siteUses.data) : null), [siteUses.data]);
-  const loading = protocol.isLoading || (!!scheduledFor && existing.isLoading) || siteUses.isLoading;
+  const loading = protocol.isLoading || existing.isLoading || siteUses.isLoading;
+  // Never fall back to "new dose" when loading the stored entry failed — saving would overwrite it.
+  const failed = protocol.isError || existing.isError || siteUses.isError;
 
   // Prefill once: existing entry for this slot, otherwise the protocol's planned dose + suggested site.
   useEffect(() => {
-    if (ready || loading || !protocol.data) return;
+    if (ready || loading || failed || !protocol.data) return;
     const d = existing.data;
     if (d) {
       setStatus(d.status);
@@ -64,20 +77,28 @@ export default function DoseSheet() {
         setTime(d.takenAt.slice(11, 16));
       }
       setAmount(d.amount !== null ? String(d.amount) : String(protocol.data.doseAmount));
+      setUnit(d.unit ?? protocol.data.doseUnit);
       setSite(d.site);
       setNotes(d.notes ?? '');
     } else {
       setAmount(String(protocol.data.doseAmount));
+      setUnit(protocol.data.doseUnit);
       setSite(suggested);
     }
     setReady(true);
-  }, [ready, loading, protocol.data, existing.data, suggested]);
+  }, [ready, loading, failed, protocol.data, existing.data, suggested]);
 
-  if (loading || !ready) {
+  if (loading || failed || !ready) {
     return (
       <View style={styles.center}>
         <Stack.Screen options={{ title: 'Log dose' }} />
-        {!loading && !protocol.data ? <Text color="textSecondary">Protocol not found.</Text> : <ActivityIndicator />}
+        {failed ? (
+          <Text color="textSecondary">Something went wrong. Please close and try again.</Text>
+        ) : !loading && !protocol.data ? (
+          <Text color="textSecondary">Protocol not found.</Text>
+        ) : (
+          <ActivityIndicator />
+        )}
       </View>
     );
   }
@@ -90,14 +111,17 @@ export default function DoseSheet() {
     if (amountError) return;
     log.mutate(
       {
-        protocolId: p.id,
-        scheduledFor: scheduledFor ?? null,
-        takenAt: status === 'taken' ? `${date}T${time}:00` : null,
-        status,
-        amount: status === 'taken' ? parsedAmount : null,
-        unit: status === 'taken' ? p.doseUnit : null,
-        site: status === 'taken' ? site : null,
-        notes: notes.trim() || null,
+        replaceDoseId: !scheduledFor && existing.data ? existing.data.id : undefined,
+        input: {
+          protocolId: p.id,
+          scheduledFor: scheduledFor ?? null,
+          takenAt: status === 'taken' ? `${date}T${time}:00` : null,
+          status,
+          amount: status === 'taken' ? parsedAmount : null,
+          unit: status === 'taken' ? unit : null,
+          site: status === 'taken' ? site : null,
+          notes: notes.trim() || null,
+        },
       },
       {
         onSuccess: () => {
@@ -116,7 +140,11 @@ export default function DoseSheet() {
       {
         text: 'Delete',
         style: 'destructive',
-        onPress: () => undo.mutate(existing.data!.id, { onSuccess: () => router.back() }),
+        onPress: () =>
+          undo.mutate(existing.data!.id, {
+            onSuccess: () => router.back(),
+            onError: (e) => Alert.alert('Could not delete', e instanceof Error ? e.message : 'Please try again.'),
+          }),
       },
     ]);
 
@@ -152,7 +180,7 @@ export default function DoseSheet() {
             </View>
             <NumberField
               label="Amount"
-              unit={p.doseUnit === 'iu' ? 'IU' : p.doseUnit}
+              unit={unit === 'iu' ? 'IU' : unit}
               value={amount}
               onChangeText={setAmount}
               error={amountError}

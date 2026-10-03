@@ -52,10 +52,15 @@ function requestedMcg(d: Pick<DoseInput, 'status' | 'amount' | 'unit'>): number 
  * amount drops in the same transaction. Re-logging the same slot replaces the old entry
  * (and restores its vial draw first).
  */
-export async function logDose(db: SQLiteDatabase, input: DoseInput): Promise<string> {
+export async function logDose(db: SQLiteDatabase, input: DoseInput, replaceDoseId?: string): Promise<string> {
   const id = newId();
   // withTransactionAsync (not Exclusive): see note in migrations.ts about connections/PRAGMAs.
   await db.withTransactionAsync(async () => {
+    // Editing an unscheduled dose: replace that exact row.
+    if (replaceDoseId) {
+      const old = await db.getFirstAsync<DoseRow>('SELECT * FROM doses WHERE id = ?', replaceDoseId);
+      if (old) await removeDoseRow(db, doseFromRow(old));
+    }
     if (input.protocolId && input.scheduledFor) {
       const existing = await db.getFirstAsync<DoseRow>(
         'SELECT * FROM doses WHERE protocol_id = ? AND scheduled_for = ?',
@@ -67,7 +72,9 @@ export async function logDose(db: SQLiteDatabase, input: DoseInput): Promise<str
 
     const link = input.protocolId
       ? await db.getFirstAsync<{ vial_id: string | null; remaining_mcg: number | null }>(
-          `SELECT p.vial_id, v.remaining_mcg FROM protocols p LEFT JOIN vials v ON v.id = p.vial_id WHERE p.id = ?`,
+          // Only an ACTIVE vial is drawn from; an empty/discarded one counts as unlinked.
+          `SELECT v.id AS vial_id, v.remaining_mcg FROM protocols p
+           LEFT JOIN vials v ON v.id = p.vial_id AND v.status = 'active' WHERE p.id = ?`,
           input.protocolId,
         )
       : null;
